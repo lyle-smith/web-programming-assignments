@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="https://bulma.io/images/bulma-logo-white.png" width="112" height="28">
+      </a>
+    </div>
+    
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item">
+          Home
+        </a>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Docs
+          </a>
+  
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              Overview
+            </a>
+            <a class="navbar-item">
+              Modifiers
+            </a>
+            <a class="navbar-item">
+              Columns
+            </a>
+            <a class="navbar-item">
+              Layout
+            </a>
+            <a class="navbar-item">
+              Form
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item">
+              Elements
+            </a>
+            <a class="navbar-item is-active">
+              Components
+            </a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button mr-3">
+              <span class="icon-text">
+                <span class="icon">
+                  <i class="fas fa-brands fa-twitter"></i>
+                </span>
+                <span>Tweet</span>
+              </span>
+            </a>
+            <a class="button is-primary">
+              <span class="icon-text">
+                <span class="icon">
+                  <i class="fas fa-download"></i>
+                </span>
+                <span>Download</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section>
+    <div class="container mt-6 ml-6 mb-6">
+      <div class="columns">
+        <div class="column is-3-tablet ml-4">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Component
+              </p>
+              <button class="card-header-icon">
+                <span class="icon">
+                  <i class="fas fa-angle-down"></i>
+                </span>
+              </button>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                <a>#css</a> 
+                <a>#responsive</a>
+                <br>
+                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a class="card-footer-item">Save</a>
+              <a class="card-footer-item">Edit</a>
+              <a class="card-footer-item">Delete</a>
+            </footer>
+          </div>
+        </div>
+
+        <div class="column is-6-tablet">
+          <div class="tabs is-boxed">
+            <ul>
+              <li class="is-active">
+                <a>
+                  <span class="icon is-small"><i class="fas fa-clipboard-list"></i></span>
+                  <span>Current</span>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <span class="icon is-small"><i class="fas fa-calendar-xmark"></i></span>
+                  <span>Completed</span>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <span class="icon is-small"><i class="fas fa-calendar-day"></i></span>
+                  <span>Upcoming</span>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <span class="icon is-small"><i class="fas fa-calendar"></i></span>
+                  <span>All</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="field panel-block">
+              <label for="new-task" class="label"></label>
+              <div class="control has-icons-left">
+                <input type="text" class="input is-success" placeholder="New Task" name="new-task">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-calendar-plus"></i>
+                </span>
+              </div>
+            </div>
+            <a class="panel-block pt-0 mt-0" for="mbga">
+              <input type="checkbox" name="mbga" checked>
+              Make Bulma great again
+            </a>
+            <a class="panel-block" for="add-features">
+              <input type="checkbox" name="add-features">
+              Add some more features
+            </a>
+            <a class="panel-block" for="make-github">
+              <input type="checkbox" name="make-github">
+              Make a github account
+            </a>
+            <a class="panel-block" for="">
+              <input type="checkbox" name="learn-github">
+              Learn how to use github
+            </a>
+            <a class="panel-block">
+              <input type="checkbox" name="add-gitignore">
+              add a .gitignore file
+            </a>
+          </div>
+        </div>
+
+        <div class="column is-3-tablet">
+          <h3 class="title is-3">Table of contents</h1>
+          <h5 class="subtitle is-5">Intra-page navigation</h5>
+          <aside class="menu">
+            <p class="menu-label">General</p>
+            <ul class="menu-list">
+              <li><a href="#">Dashboard</a></li>
+              <li><a href="#">Customers</a></li>
+            </ul>
+            <p class="menu-label">Administration</p>
+            <ul class="menu-list">
+              <li><a href="#">Team Settings</a></li>
+              <li><a href="#" class="is-active">Manage Your Team</a>
+                <ul>
+                  <li><a href="#">Members</a></li>
+                  <li><a href="#">Plugins</a></li>
+                  <li><a href="#">Add a member</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Invitations</a></li>
+              <li><a href="#">Cloud Storage Environment Settings</a></li>
+              <li><a href="#">Authentication</a></li>
+            </ul>
+            <p class="menu-label">Transactions</p>
+            <ul class="menu-list">
+              <li><a href="#">Payments</a></li>
+              <li><a href="#">Transfers</a></li>
+              <li><a href="#">Balance</a></li>
+            </ul>
+          </aside>
+        </div>
+    </div>
+  </section>
+</body>
+</html>
