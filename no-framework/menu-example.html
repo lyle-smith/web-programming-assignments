@@ -5,8 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #dcfae6;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .navbar {
+            align-items: center;
+            list-style: none;
+            background-color: #279c40;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar li {
+            display: inline-block;
+            padding: 4.5px 10px;
+            width: 4.7em;
+        }
+
+        .navbar li a {
+            text-decoration: none;
+            color: black;
+            font-size: 1.13em;
+        }
+
+        .navbar li:hover {
+            background-color: #1ec342;
+        }
+
+    </style>
 </head>
 <body>
-    
+    <nav>
+        <ul class="navbar">
+            <li><a href="#"><strong>File</strong></a></li>
+            <li><a href="#">Edit</a></li>
+            <li><a href="#"><strong>View</strong></a></li>
+        </ul>
+    </nav>
 </body>
 </html>
