@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import NavVue from "./components/Nav.vue";
 </script>
 
@@ -8,7 +8,7 @@ import NavVue from "./components/Nav.vue";
     <NavVue />
   </header>
 
-  <div class="container-fluid">
+  <div>
     <RouterView />
   </div>
 </template>

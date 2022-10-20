@@ -8,6 +8,10 @@ export function login(firstName: string, lastName: string) {
   session.user = { firstName, lastName };
 }
 
+export function logout() {
+  session.user = null;
+}
+
 export class User {
   public firstName?: string;
   public lastName?: string;

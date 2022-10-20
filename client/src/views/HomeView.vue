@@ -1,12 +1,15 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <main class="container-fluid columns is-centered is-vcentered">
-    <div class="column is-6">
-      <h2 class="title is-1 secondary"><span class="has-text-danger">WORKOUT</span> TIME</h2>
+  <main class="columns is-centered is-vcentered is-mobile">
+    <div class="column is-half">
+      <h2 class="title is-1 secondary">
+        <span class="has-text-danger">WORKOUT</span> TIME
+      </h2>
       <h3 class="subtitle is-3 secondary">SPECIAL CLASSES</h3>
-      <button class="button is-rounded px-6 mr-3 is-danger">Explore</button>
+      <button class="button is-rounded px-6 mr-3 is-danger">
+        Let's Workout!
+      </button>
       <button class="button is-rounded px-6">Read More</button>
     </div>
   </main>

@@ -2,7 +2,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { RouterLink } from 'vue-router';
-  import LoginBadge from './LoginPage.vue';
+  import LoginBadge from './LoginBadge.vue';
 
   let isActive = ref(false);
 </script>
@@ -35,9 +35,13 @@
       >
         <div class="navbar-end">
           <router-link to="/" class="navbar-item">Home</router-link>
-          <router-link to="/shop" class="navbar-item">Shop</router-link>
-          <router-link to="/news" class="navbar-item">News</router-link>
-          <router-link to="/support" class="navbar-item">Support</router-link>
+          <router-link to="/my-workouts" class="navbar-item"
+            >My Workouts</router-link
+          >
+          <router-link to="/social" class="navbar-item"
+            >Social</router-link
+          >
+          <router-link to="/about" class="navbar-item">About</router-link>
           <div class="navbar-item">
             <div class="buttons">
               <LoginBadge />
