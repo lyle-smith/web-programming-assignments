@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import session, { login, logout } from "../stores/session";
+import session, { login, logout, isLoggedIn } from "../stores/session";
 </script>
 
 <template>
-  <div class="buttons" v-if="session.user == null">
+  <div class="buttons" v-if="!isLoggedIn()">
     <a class="button is-danger">
       <strong>Sign up</strong>
     </a>
@@ -11,17 +11,19 @@ import session, { login, logout } from "../stores/session";
       <a class="button is-light"> Log in </a>
 
       <div class="navbar-dropdown">
-        <a class="navbar-item" @click="login('Lyle', 'Smith')">Lyle Smith</a>
-        <a class="navbar-item" @click="login('Michael', 'Jordan')">Michael Jordan</a>
-        <a class="navbar-item" @click="login('Bill', 'Gates')">Bill Gates</a>
+        <a class="navbar-item" @click="login('Lyle', 'Smith', true)">Lyle Smith</a>
+        <a class="navbar-item" @click="login('Michael', 'Jordan', false)"
+          >Michael Jordan</a
+        >
+        <a class="navbar-item" @click="login('Bill', 'Gates', false)">Bill Gates</a>
       </div>
     </div>
   </div>
   <div v-else>
-    Welcome {{ session.user.firstName }} {{ session.user.lastName }}! (<a
-      @click="logout()"
-      >logout</a
-    >)
+    <a class="navbar-item" @click="logout()">
+      {{ session.user?.firstName }} {{ session.user?.lastName }}
+    </a>
+    <!-- (<a @click="logout()">logout</a>) -->
   </div>
 </template>
 

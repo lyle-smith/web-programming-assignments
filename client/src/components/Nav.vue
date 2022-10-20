@@ -3,6 +3,7 @@
   import { ref } from 'vue';
   import { RouterLink } from 'vue-router';
   import LoginBadge from './LoginBadge.vue';
+  import { isAdmin } from '../stores/session';
 
   let isActive = ref(false);
 </script>
@@ -34,18 +35,17 @@
         :class="{ 'is-active': isActive }"
       >
         <div class="navbar-end">
+          <router-link to="/admin" class="navbar-item" v-if="isAdmin()"
+            >Admin</router-link
+          >
           <router-link to="/" class="navbar-item">Home</router-link>
           <router-link to="/my-workouts" class="navbar-item"
             >My Workouts</router-link
           >
-          <router-link to="/social" class="navbar-item"
-            >Social</router-link
-          >
+          <router-link to="/social" class="navbar-item">Social</router-link>
           <router-link to="/about" class="navbar-item">About</router-link>
           <div class="navbar-item">
-            <div class="buttons">
-              <LoginBadge />
-            </div>
+            <LoginBadge />
           </div>
         </div>
       </div>
