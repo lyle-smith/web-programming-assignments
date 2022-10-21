@@ -11,11 +11,9 @@ import session, { login, logout, isLoggedIn } from "../stores/session";
       <a class="button is-light"> Log in </a>
 
       <div class="navbar-dropdown">
-        <a class="navbar-item" @click="login('Lyle', 'Smith', true)">Lyle Smith</a>
-        <a class="navbar-item" @click="login('Michael', 'Jordan', false)"
-          >Michael Jordan</a
-        >
-        <a class="navbar-item" @click="login('Bill', 'Gates', false)">Bill Gates</a>
+        <a class="navbar-item" @click="login('lylesmith123')">Lyle Smith</a>
+        <a class="navbar-item" @click="login('mjordan01')">Michael Jordan</a>
+        <a class="navbar-item" @click="login('windows4life')">Bill Gates</a>
       </div>
     </div>
   </div>

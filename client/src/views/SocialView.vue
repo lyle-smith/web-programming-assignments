@@ -1,15 +1,17 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <main v-if="isLoggedIn()" class="has-background-danger">
+    <div>Social Page</div>
+  </main>
+  <main v-else>
+    <LoginView />
+  </main>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+<script setup lang="ts">
+import { isLoggedIn } from "../stores/session";
+import LoginView from "./LoginView.vue";
+</script>
+
+<style scoped>
+
 </style>

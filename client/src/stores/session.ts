@@ -2,10 +2,35 @@ import { reactive } from "vue";
 
 const session = reactive({
   user: null as User | null,
+  users: [] as User[],
 });
 
-export function login(firstName: string, lastName: string, isAdmin: boolean) {
-  session.user = { firstName, lastName, isAdmin };
+export function addUser(
+  firstName: string,
+  lastName: string,
+  userName: string,
+  email: string,
+  isAdmin: boolean
+) {
+  if (!session.users.find((u) => u.userName === userName)) {
+    const user = new User(firstName, lastName, userName, email, isAdmin);
+    session.users.push(user);
+  }
+}
+
+export function removeUser(user: User) {
+  const index = session.users.indexOf(user);
+  if (index > -1) {
+    session.users.splice(index, 1);
+  }
+}
+
+export function login(userName: string) {
+  session.users.forEach((user) => {
+    if (user.userName === userName) {
+      session.user = user;
+    }
+  });
 }
 
 export function logout() {
@@ -25,9 +50,25 @@ export function isAdmin() {
 }
 
 export class User {
-  public firstName?: string;
-  public lastName?: string;
-  public isAdmin?: boolean;
+  public firstName: string;
+  public lastName: string;
+  public userName: string;
+  public email: string;
+  public isAdmin: boolean;
+
+  constructor(
+    firstName: string,
+    lastName: string,
+    userName: string,
+    email: string,
+    isAdmin: boolean
+  ) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.userName = userName;
+    this.email = email;
+    this.isAdmin = isAdmin;
+  }
 }
 
 export default session;

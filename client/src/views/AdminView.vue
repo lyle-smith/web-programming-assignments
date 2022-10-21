@@ -1,14 +1,40 @@
 <template>
   <main v-if="isAdmin()">
-    <div>Admin Screen</div>
+    <div class="table-container column is-6 mx-auto">
+      <table class="table is-fullwidth mt-6">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Is Admin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="user in session.users">
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.userName }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <button class="button is-danger" @click="removeUser(user)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="button is-dark is-fullwidth">Add User</button>
+    </div>
   </main>
   <main v-else>
-    <div>Can not access this page. Please log in.</div>
+    <div>Can not access this page. Please log in to an admin account.</div>
   </main>
 </template>
 
 <script setup lang="ts">
-import { isAdmin } from "../stores/session";
+import session, { isAdmin, removeUser } from "../stores/session";
 </script>
 
 <style scoped></style>

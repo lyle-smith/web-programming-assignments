@@ -1,18 +1,17 @@
-<!-- eslint-disable prettier/prettier -->
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { RouterLink } from 'vue-router';
-  import LoginBadge from './LoginBadge.vue';
-  import { isAdmin } from '../stores/session';
+import { ref } from "vue";
+import { RouterLink } from "vue-router";
+import LoginBadge from "./LoginBadge.vue";
+import { isAdmin } from "../stores/session";
 
-  let isActive = ref(false);
+let isActive = ref(false);
 </script>
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
         <a class="navbar-item has-text-weight-semibold" href="https://bulma.io"
-          ><span class="primary">SPE</span>CIAL</a
+          ><span class="has-text-danger">SPE</span>CIAL</a
         >
 
         <a
@@ -59,5 +58,13 @@
 }
 .primary {
   color: #df0a0a;
+}
+
+main {
+  height: 93vh;
+}
+
+nav {
+  height: 7vh;
 }
 </style>
