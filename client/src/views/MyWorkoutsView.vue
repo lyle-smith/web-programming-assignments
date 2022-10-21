@@ -6,7 +6,31 @@
       </div>
     </div>
     <div class="columns is-centered">
-      <Workout />
+      <Workout
+        :first-name="session.user?.firstName"
+        :last-name="session.user?.lastName"
+        :username="session.user?.userName"
+        workout-type="strength"
+        workout-time="40 minutes"
+      />
+    </div>
+    <div class="columns is-centered mt-4">
+      <Workout
+        :first-name="session.user?.firstName"
+        :last-name="session.user?.lastName"
+        :username="session.user?.userName"
+        workout-type="strength"
+        workout-time="2 hours"
+      />
+    </div>
+    <div class="columns is-centered mt-4">
+      <Workout
+        :first-name="session.user?.firstName"
+        :last-name="session.user?.lastName"
+        :username="session.user?.userName"
+        workout-type="cardio"
+        workout-time="16 minutes"
+      />
     </div>
   </main>
   <main v-else>
@@ -15,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { isLoggedIn } from "../stores/session";
+import session, { isLoggedIn } from "../stores/session";
 import LoginView from "./LoginView.vue";
 import Workout from "../components/Workout.vue";
 </script>
