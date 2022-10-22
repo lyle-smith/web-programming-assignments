@@ -1,9 +1,10 @@
 <template>
   <main v-if="isAdmin()">
-    <div class="table-container column is-6 mx-auto">
+    <div class="table-container column is-7 mx-auto">
       <table class="table is-fullwidth mt-6">
         <thead>
           <tr>
+            <th></th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Username</th>
@@ -13,10 +14,16 @@
         </thead>
         <tbody>
           <tr v-for="user in session.users">
+            <td>
+              <figure class="image is-48x48">
+                <img :src="user.profilePicture" class="is-rounded" />
+              </figure>
+            </td>
             <td>{{ user.firstName }}</td>
             <td>{{ user.lastName }}</td>
             <td>{{ user.userName }}</td>
             <td>{{ user.email }}</td>
+            <td>{{ user.isAdmin }}</td>
             <td>
               <button class="button is-danger" @click="removeUser(user)">
                 Delete

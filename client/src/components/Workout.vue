@@ -1,7 +1,7 @@
 <template>
   <div class="column is-1">
     <figure class="image is-96x96">
-      <img src="../assets/bill-gates-pic.webp" class="is-rounded" />
+      <img :src="profilePicture" class="is-rounded" />
     </figure>
   </div>
   <div class="column is-4">
@@ -16,13 +16,13 @@
     </p>
     <p class="is-size-5">
       Completed a
-      <span class="has-text-weight-semibold">{{ workoutType }} workout</span> in
+      <span class="has-text-weight-semibold">{{ workoutType }}</span> workout in
       <span class="has-text-weight-semibold">{{ workoutTime }}</span>
     </p>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // const date = Date.now()
 // const year = date.getYear();
 export default {
@@ -47,6 +47,10 @@ export default {
       type: String,
       required: true,
     },
+    profilePicture: {
+      type: String,
+      required: true,
+    },
   },
 };
 </script>
@@ -54,5 +58,10 @@ export default {
 <style scoped>
 .column {
   border-bottom: 1px solid #beafaf;
+}
+
+img {
+  height: 100%;
+  width: 100%;
 }
 </style>

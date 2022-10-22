@@ -1,8 +1,29 @@
 <script setup lang="ts">
 import { addUser } from "../stores/session";
-addUser("Lyle", "Smith", "lylesmith123", "lylesmith@gmail.com", true);
-addUser("Michael", "Jordan", "mjordan01", "michaelj@gmail.com", false);
-addUser("Bill", "Gates", "windows4life", "billyg@microstoft.com", false);
+addUser(
+  "Lyle",
+  "Smith",
+  "lylesmith123",
+  "lylesmith@gmail.com",
+  true,
+  "/src/assets/lyle-smith-pic.jpg"
+);
+addUser(
+  "Michael",
+  "Jordan",
+  "mjordan01",
+  "michaelj@gmail.com",
+  false,
+  "/src/assets/michael.jpg"
+);
+addUser(
+  "Bill",
+  "Gates",
+  "windows4life",
+  "billyg@microstoft.com",
+  false,
+  "/src/assets/bill-gates-pic.webp"
+);
 </script>
 
 <template>

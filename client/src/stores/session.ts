@@ -10,10 +10,18 @@ export function addUser(
   lastName: string,
   userName: string,
   email: string,
-  isAdmin: boolean
+  isAdmin: boolean,
+  profilePicture: string
 ) {
   if (!session.users.find((u) => u.userName === userName)) {
-    const user = new User(firstName, lastName, userName, email, isAdmin);
+    const user = new User(
+      firstName,
+      lastName,
+      userName,
+      email,
+      isAdmin,
+      profilePicture
+    );
     session.users.push(user);
   }
 }
@@ -55,19 +63,22 @@ export class User {
   public userName: string;
   public email: string;
   public isAdmin: boolean;
+  public profilePicture: string;
 
   constructor(
     firstName: string,
     lastName: string,
     userName: string,
     email: string,
-    isAdmin: boolean
+    isAdmin: boolean,
+    profilePicture: string
   ) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.userName = userName;
     this.email = email;
     this.isAdmin = isAdmin;
+    this.profilePicture = profilePicture;
   }
 }
 
