@@ -17,7 +17,9 @@
     <p class="is-size-5">
       Completed a
       <span class="has-text-weight-semibold">{{ workoutType }}</span> workout in
-      <span class="has-text-weight-semibold">{{ workoutTime }}</span>
+      <span class="has-text-weight-semibold"
+        >{{ workoutTime }} {{ timeUnit }}</span
+      >
     </p>
   </div>
 </template>
@@ -44,6 +46,10 @@ export default {
       required: true,
     },
     workoutTime: {
+      type: String,
+      required: true,
+    },
+    timeUnit: {
       type: String,
       required: true,
     },

@@ -3,6 +3,7 @@ import { reactive } from "vue";
 const session = reactive({
   user: null as User | null,
   users: [] as User[],
+  workoutHistory: [] as WorkoutSession[],
 });
 
 export function addUser(
@@ -79,6 +80,29 @@ export class User {
     this.email = email;
     this.isAdmin = isAdmin;
     this.profilePicture = profilePicture;
+  }
+}
+
+export function addWorkoutSession(
+  name: string,
+  duration: number,
+  timeUnit: string
+) {
+  if (name != "Workout Type" && duration >= 0 && timeUnit != "Time Unit") {
+    const workoutSession = new WorkoutSession(name, duration, timeUnit);
+    session.workoutHistory.push(workoutSession);
+  }
+}
+
+export class WorkoutSession {
+  public name: string;
+  public duration: number;
+  public timeUnit: string;
+
+  constructor(name: string, duration: number, timeUnit: string) {
+    this.name = name;
+    this.duration = duration;
+    this.timeUnit = timeUnit;
   }
 }
 
