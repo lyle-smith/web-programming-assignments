@@ -21,7 +21,6 @@ import session, { login, logout, isLoggedIn } from "../stores/session";
     <a class="navbar-item" @click="logout()">
       {{ session.user?.firstName }} {{ session.user?.lastName }}
     </a>
-    <!-- (<a @click="logout()">logout</a>) -->
   </div>
 </template>
 
