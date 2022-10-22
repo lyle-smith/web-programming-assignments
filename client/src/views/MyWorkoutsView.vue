@@ -34,7 +34,7 @@
           <div class="control">
             <button
               type="submit"
-              class="button is-primary"
+              class="button is-danger"
               @click="
                 addWorkoutSession(workoutType, duration, timeUnit);
                 displayAddWorkout = false;

@@ -14,7 +14,7 @@ addUser(
   "mjordan01",
   "michaelj@gmail.com",
   false,
-  "/src/assets/michael.jpg"
+  "/src/assets/michael-jordan-pic.jpg"
 );
 addUser(
   "Bill",
