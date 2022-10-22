@@ -10,8 +10,11 @@ let isActive = ref(false);
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item has-text-weight-semibold" href="https://bulma.io"
-          ><span class="has-text-danger">SPE</span>CIAL</a
+        <router-link
+          id="logo"
+          class="navbar-item has-text-weight-semibold"
+          to="/"
+          ><span class="has-text-danger">SPE</span>CIAL</router-link
         >
 
         <a
@@ -56,6 +59,13 @@ let isActive = ref(false);
 .router-link-active {
   border-bottom: #df0a0a 2px solid;
 }
+
+.navbar-brand #logo {
+  border-bottom: none;
+  text-decoration: none;
+  color: inherit;
+}
+
 .primary {
   color: #df0a0a;
 }
