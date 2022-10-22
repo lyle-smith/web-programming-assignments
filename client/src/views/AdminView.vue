@@ -15,7 +15,7 @@
         <tbody>
           <tr v-for="user in session.users">
             <td>
-              <figure class="image is-48x48">
+              <figure class="image is-64x64">
                 <img :src="user.profilePicture" class="is-rounded" />
               </figure>
             </td>
@@ -44,4 +44,9 @@
 import session, { isAdmin, removeUser } from "../stores/session";
 </script>
 
-<style scoped></style>
+<style scoped>
+img {
+  height: 100%;
+  width: 100%;
+}
+</style>
