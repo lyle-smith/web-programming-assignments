@@ -2,7 +2,7 @@
   <main v-if="isLoggedIn()">
     <div class="columns is-centered mt-5">
       <div class="column is-5 has-text-centered">
-        <h2 class="title is-3">My Workouts {{ timeUnit }}</h2>
+        <h2 class="title is-3">My Workouts</h2>
         <button class="button" @click="displayAddWorkout = !displayAddWorkout">
           Add Workout
         </button>

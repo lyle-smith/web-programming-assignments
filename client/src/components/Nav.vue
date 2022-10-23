@@ -70,10 +70,6 @@ let isActive = ref(false);
   color: #df0a0a;
 }
 
-main {
-  height: 93vh;
-}
-
 nav {
   height: 7vh;
 }

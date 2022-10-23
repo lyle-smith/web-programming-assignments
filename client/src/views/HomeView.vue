@@ -46,9 +46,12 @@ main {
   background-image: url(../assets/landing-background.jpg);
   background-position: center center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  min-height: 94vh;
+  /* background-attachment: fixed; */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: 100% 100%;
+  min-height: 120vh;
   color: white;
 }
 
