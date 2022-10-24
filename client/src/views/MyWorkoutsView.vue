@@ -6,31 +6,52 @@
         <button class="button" @click="displayAddWorkout = !displayAddWorkout">
           Add Workout
         </button>
-        <div class="field has-addons" v-if="displayAddWorkout">
-          <p class="control">
-            <span class="select">
-              <select v-model="workoutType">
-                <option selected="true">Workout Type</option>
-                <option>Strength</option>
-                <option>Hypertrophy</option>
-                <option>Endurance</option>
-                <option>Calisthenics</option>
-                <option>Cardio</option>
-              </select>
-            </span>
-          </p>
-          <p class="control">
-            <input class="input" type="number" v-model="duration" required />
-          </p>
-          <p class="control">
-            <span class="select">
-              <select v-model="timeUnit">
-                <option selected="true">Time Unit</option>
-                <option>Minutes</option>
-                <option>Hours</option>
-              </select>
-            </span>
-          </p>
+        <div id="add-workout-form" class="pt-4" v-if="displayAddWorkout">
+          <div class="field is-horizontal">
+            <div class="field-label is-fullwidth">
+              <label class="label">Workout type</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <div class="select">
+                    <select v-model="workoutType">
+                      <option>Strength</option>
+                      <option>Hypertrophy</option>
+                      <option>Endurance</option>
+                      <option>Calisthenics</option>
+                      <option>Cardio</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Duration</label>
+            </div>
+            <div class="field-body">
+              <div class="field has-addons">
+                <div class="control">
+                  <input
+                    class="input"
+                    type="number"
+                    v-model="duration"
+                    required
+                  />
+                </div>
+                <p class="control">
+                  <span class="select">
+                    <select v-model="timeUnit">
+                      <option>Minutes</option>
+                      <option>Hours</option>
+                    </select>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
           <div class="control">
             <button
               type="submit"
@@ -40,7 +61,7 @@
                 displayAddWorkout = false;
               "
             >
-              Add Workout
+              Add
             </button>
           </div>
         </div>
@@ -106,9 +127,15 @@ import Workout from "../components/Workout.vue";
 import { ref } from "vue";
 
 let displayAddWorkout = ref(false);
-let timeUnit = ref("Time Unit");
+let timeUnit = ref("Minutes");
 let duration = ref(0);
-let workoutType = ref("Workout Type");
+let workoutType = ref("Strength");
 </script>
 
-<style scoped></style>
+<style scoped>
+@media screen and (min-width: 769px), print {
+  .field-label {
+    flex-grow: 2;
+  }
+};
+</style>
