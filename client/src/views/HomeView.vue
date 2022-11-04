@@ -46,7 +46,6 @@ main {
   background-image: url(../assets/landing-background.jpg);
   background-position: center center;
   background-repeat: no-repeat;
-  /* background-attachment: fixed; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

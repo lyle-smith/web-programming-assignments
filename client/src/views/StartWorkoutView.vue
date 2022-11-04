@@ -1,7 +1,7 @@
 <template>
   <main v-if="isLoggedIn()">
     <div class="container">
-      <h1 class="title is-2 has-text-black m-5"><b>Workout</b> Activity</h1>
+      <h1 class="title is-2 has-text-black p-5"><b>Workout</b> Activity</h1>
       <div class="setup-workout">
         <div
           class="bubble has-text-centered has-background-danger"
@@ -69,6 +69,10 @@ import LoginView from "./LoginView.vue";
 </script>
 
 <style scoped>
+main {
+  background-color: #272727;
+}
+
 a {
   color: white;
   text-decoration: none;
