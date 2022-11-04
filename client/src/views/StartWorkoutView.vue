@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="columns mt-6">
-      <div class="column is-6">
+      <div class="column is-7">
         <div class="bubble px-4 py-3 current-workout">
           <p class="pl-5 pb-3">
             <span class="pl-6 pr-5">Bodybuilding Workout</span> Day 1
@@ -48,6 +48,32 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="bubble" id="personal-record">
+          <p class="mb-1"><b class="is-size-5">Personal Record</b></p>
+          <div class="columns">
+            <div class="column"><p>Squat</p></div>
+            <div class="column"><p>Bench</p></div>
+            <div class="column"><p>Deadlift</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-5">
+        <div class="bubble mt-6">
+          <p class="has-text-centered py-2"><b>Energy Meter</b></p>
+          <div id="rpe"></div>
+          <div id="energy-bar">
+            <div id="one" class="bar red"></div>
+            <div id="two" class="bar red"></div>
+            <div id="three" class="bar red"></div>
+            <div id="four" class="bar yellow"></div>
+            <div id="five" class="bar yellow"></div>
+            <div id="six" class="bar yellow"></div>
+            <div id="seven" class="bar yellow"></div>
+            <div id="eight" class="bar green"></div>
+            <div id="nine" class="bar green"></div>
+            <div id="ten" class="bar green"></div>
           </div>
         </div>
       </div>
@@ -96,10 +122,27 @@ a {
   background-color: #791a12;
 }
 
+.red {
+  background-color: #ed3337;
+}
+
+.yellow {
+  background-color: #fef212;
+}
+
+.green {
+  background-color: #00a859;
+}
+
 .setup-workout .bubble {
   border-radius: 1em;
   width: fit-content;
   padding: 1em 3em;
+}
+
+.bar {
+  width: 1em;
+  margin: 0.8em 0.2em;
 }
 
 #date-select {
@@ -109,5 +152,78 @@ a {
 
 #date-select a {
   padding: 0 1em;
+}
+
+#energy-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+#personal-record {
+  margin-top: 8em;
+  margin-left: 6em;
+  padding: 1em 4em 3em 2em;
+}
+
+#personal-record .column p {
+  padding-right: 1.3em;
+  border-right: 1px solid white;
+}
+
+#personal-record .column:last-child p {
+  border-right: none;
+}
+
+#one {
+  height: 1em;
+}
+
+#two {
+  height: 1.5em;
+}
+
+#three {
+  height: 2em;
+}
+
+#four {
+  height: 2.5em;
+}
+
+#five {
+  height: 3em;
+}
+
+#six {
+  height: 3.5em;
+}
+
+#seven {
+  height: 4em;
+}
+
+#eight {
+  height: 4.5em;
+}
+
+#nine {
+  height: 5em;
+}
+
+#ten {
+  height: 5.5em;
+}
+
+#rpe {
+  width: 18em;
+  height: 18em;
+  background-image: url(../assets/RPE-scale.webp);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: 100% 100%;
 }
 </style>
