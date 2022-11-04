@@ -57,7 +57,11 @@
               type="submit"
               class="button is-danger"
               @click="
-                addWorkoutSession(workoutType, duration, timeUnit);
+                session.user?.addWorkoutSession(
+                  workoutType,
+                  duration,
+                  timeUnit
+                );
                 displayAddWorkout = false;
               "
             >
@@ -102,14 +106,15 @@
     </div>
     <div
       class="columns is-centered mt-4"
-      v-for="workout in session.workoutHistory"
+      v-for="workout in session.user?.workoutHistory"
+      :key="workout.id"
     >
       <Workout
         :first-name="session.user?.firstName"
         :last-name="session.user?.lastName"
         :username="session.user?.userName"
         :workout-type="workout.name"
-        :workout-time="workout.duration"
+        :workout-time="workout.duration.toString()"
         :time-unit="workout.timeUnit"
         :profile-picture="session.user?.profilePicture"
       />
@@ -121,7 +126,7 @@
 </template>
 
 <script setup lang="ts">
-import session, { addWorkoutSession, isLoggedIn } from "../stores/session";
+import session, { isLoggedIn } from "../stores/session";
 import LoginView from "./LoginView.vue";
 import Workout from "../components/Workout.vue";
 import { ref } from "vue";
@@ -137,5 +142,5 @@ let workoutType = ref("Strength");
   .field-label {
     flex-grow: 2;
   }
-};
+} ;
 </style>

@@ -11,7 +11,8 @@
         :last-name="lastName1"
         :username="userName1"
         workout-type="hypertrophy"
-        workout-time="1.5 hours"
+        workout-time="1.5"
+        time-unit="hours"
         :profile-picture="profilePicture1"
       />
     </div>
@@ -21,7 +22,8 @@
         :last-name="lastName2"
         :username="userName2"
         workout-type="strength"
-        workout-time="1 hour"
+        workout-time="1"
+        time-unit="hours"
         :profile-picture="profilePicture2"
       />
     </div>
@@ -31,7 +33,8 @@
         :last-name="lastName3"
         :username="userName3"
         workout-type="cardio"
-        workout-time="50 minutes"
+        workout-time="50"
+        time-unit="minutes"
         :profile-picture="profilePicture3"
       />
     </div>

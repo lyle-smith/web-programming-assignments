@@ -4,6 +4,7 @@ const session = reactive({
   user: null as User | null,
   users: [] as User[],
   workoutHistory: [] as WorkoutSession[],
+  latestWorkoutHistoryId: 1,
 });
 
 export function addUser(
@@ -65,6 +66,7 @@ export class User {
   public email: string;
   public isAdmin: boolean;
   public profilePicture: string;
+  public workoutHistory: WorkoutSession[];
 
   constructor(
     firstName: string,
@@ -80,17 +82,14 @@ export class User {
     this.email = email;
     this.isAdmin = isAdmin;
     this.profilePicture = profilePicture;
+    this.workoutHistory = [];
   }
-}
 
-export function addWorkoutSession(
-  name: string,
-  duration: number,
-  timeUnit: string
-) {
-  if (name != "Workout Type" && duration >= 0 && timeUnit != "Time Unit") {
-    const workoutSession = new WorkoutSession(name, duration, timeUnit);
-    session.workoutHistory.push(workoutSession);
+  public addWorkoutSession(name: string, duration: number, timeUnit: string) {
+    if (name != "Workout Type" && duration >= 0 && timeUnit != "Time Unit") {
+      const workoutSession = new WorkoutSession(name, duration, timeUnit);
+      this.workoutHistory.push(workoutSession);
+    }
   }
 }
 
@@ -98,11 +97,14 @@ export class WorkoutSession {
   public name: string;
   public duration: number;
   public timeUnit: string;
+  public id: number;
 
   constructor(name: string, duration: number, timeUnit: string) {
     this.name = name;
     this.duration = duration;
     this.timeUnit = timeUnit;
+    this.id = session.latestWorkoutHistoryId;
+    session.latestWorkoutHistoryId++;
   }
 }
 
