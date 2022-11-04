@@ -41,6 +41,9 @@ let isActive = ref(false);
             >Admin</router-link
           >
           <router-link to="/" class="navbar-item">Home</router-link>
+          <router-link to="/start-workout" class="navbar-item"
+            >Start Workout</router-link
+          >
           <router-link to="/my-workouts" class="navbar-item"
             >My Workouts</router-link
           >
