@@ -1,26 +1,21 @@
 <template>
   <main v-if="isLoggedIn()">
     <div class="container">
-      <h1 class="title is-2 has-text-black p-5"><b>Workout</b> Activity</h1>
+      <h1 class="title is-2 p-5 has-text-light"><b>Workout</b> Activity</h1>
       <div class="setup-workout">
-        <div
-          class="bubble has-text-centered has-background-danger"
-          id="date-select"
-        >
+        <div class="bubble has-text-centered" id="date-select">
           <a href="">S</a> / <a href="">M</a> / <a href="">T</a> /
           <a href="">W</a> / <a href="">T</a> / <a href="">F</a> /
           <a href="">S</a>
         </div>
-        <div class="bubble has-background-danger">Add Workout</div>
-        <div class="bubble has-background-danger">
-          Training Type: Bodybuilding
-        </div>
-        <div class="bubble has-background-danger">Exercise Quantity: 1</div>
+        <div class="bubble">Add Workout</div>
+        <div class="bubble">Training Type: Bodybuilding</div>
+        <div class="bubble">Exercise Quantity: 1</div>
       </div>
     </div>
-    <div class="columns">
+    <div class="columns mt-6">
       <div class="column is-6">
-        <div class="bubble has-background-danger px-4 py-3 current-workout">
+        <div class="bubble px-4 py-3 current-workout">
           <p class="pl-5 pb-3">
             <span class="pl-6 pr-5">Bodybuilding Workout</span> Day 1
           </p>
@@ -70,7 +65,8 @@ import LoginView from "./LoginView.vue";
 
 <style scoped>
 main {
-  background-color: #272727;
+  background-color: #1f1f1f;
+  color: white;
 }
 
 a {
@@ -97,6 +93,7 @@ a {
   border-radius: 1em;
   width: fit-content;
   color: white;
+  background-color: #791a12;
 }
 
 .setup-workout .bubble {
