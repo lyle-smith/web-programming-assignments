@@ -75,5 +75,6 @@ let isActive = ref(false);
 
 nav {
   height: 7vh;
+  padding-bottom: 4em;
 }
 </style>

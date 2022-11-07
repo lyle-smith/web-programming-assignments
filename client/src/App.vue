@@ -13,8 +13,4 @@ import NavVue from "./components/Nav.vue";
   </div>
 </template>
 
-<style scoped>
-div {
-  padding-top: 4vh;
-}
-</style>
+<style scoped></style>
