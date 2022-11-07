@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="columns is-centered">
-      <Workout
+      <WorkoutPost
         :first-name="firstName1"
         :last-name="lastName1"
         :username="userName1"
@@ -17,7 +17,7 @@
       />
     </div>
     <div class="columns is-centered mt-4">
-      <Workout
+      <WorkoutPost
         :first-name="firstName2"
         :last-name="lastName2"
         :username="userName2"
@@ -28,7 +28,7 @@
       />
     </div>
     <div class="columns is-centered mt-4">
-      <Workout
+      <WorkoutPost
         :first-name="firstName3"
         :last-name="lastName3"
         :username="userName3"
@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import session, { isLoggedIn } from "../stores/session";
 import LoginView from "./LoginView.vue";
-import Workout from "../components/Workout.vue";
+import WorkoutPost from "../components/WorkoutPost.vue";
 
 let randomIndex1 = Math.floor(Math.random() * 3);
 let firstName1 = session.users[randomIndex1]?.firstName;

@@ -72,7 +72,7 @@
       </div>
     </div>
     <div class="columns is-centered">
-      <Workout
+      <WorkoutPost
         :first-name="session.user?.firstName"
         :last-name="session.user?.lastName"
         :username="session.user?.userName"
@@ -83,7 +83,7 @@
       />
     </div>
     <div class="columns is-centered mt-4">
-      <Workout
+      <WorkoutPost
         :first-name="session.user?.firstName"
         :last-name="session.user?.lastName"
         :username="session.user?.userName"
@@ -94,7 +94,7 @@
       />
     </div>
     <div class="columns is-centered mt-4">
-      <Workout
+      <WorkoutPost
         :first-name="session.user?.firstName"
         :last-name="session.user?.lastName"
         :username="session.user?.userName"
@@ -109,7 +109,7 @@
       v-for="workout in session.user?.workoutHistory"
       :key="workout.id"
     >
-      <Workout
+      <WorkoutPost
         :first-name="session.user?.firstName"
         :last-name="session.user?.lastName"
         :username="session.user?.userName"
@@ -128,7 +128,7 @@
 <script setup lang="ts">
 import session, { isLoggedIn } from "../stores/session";
 import LoginView from "./LoginView.vue";
-import Workout from "../components/Workout.vue";
+import WorkoutPost from "../components/WorkoutPost.vue";
 import { ref } from "vue";
 
 let displayAddWorkout = ref(false);

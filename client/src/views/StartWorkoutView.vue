@@ -13,43 +13,31 @@
         <div class="bubble">Exercise Quantity: 1</div>
       </div>
     </div>
+    <div class="columns">
+      <div class="column">
+        <WorkoutSession />
+      </div>
+      <div class="column">
+        <WorkoutSession />
+      </div>
+      <div class="column">
+        <WorkoutSession />
+      </div>
+      <div class="column">
+        <WorkoutSession />
+      </div>
+      <div class="column">
+        <WorkoutSession />
+      </div>
+      <div class="column">
+        <WorkoutSession />
+      </div>
+      <div class="column">
+        <WorkoutSession />
+      </div>
+    </div>
     <div class="columns mt-6">
       <div class="column is-7">
-        <div class="bubble px-4 py-3 current-workout">
-          <p class="pl-5 pb-3">
-            <span class="pl-6 pr-5">Bodybuilding Workout</span> Day 1
-          </p>
-          <div class="columns">
-            <div class="column is-3">
-              <p>Exercise</p>
-              <p>Exercise</p>
-              <p>Exercise</p>
-              <p>Exercise</p>
-              <p>Exercise</p>
-              <p class="has-text-centered">+</p>
-            </div>
-            <div class="column is-9">
-              <div class="columns">
-                <div class="column is-3">
-                  <p>Weight</p>
-                  <button class="button is-outlined"></button>
-                </div>
-                <div class="column is-3">
-                  <p>Sets</p>
-                  <button class="button is-outlined"></button>
-                </div>
-                <div class="column is-3">
-                  <p>Reps</p>
-                  <button class="button is-outlined"></button>
-                </div>
-                <div class="column is-3">
-                  <p>RPE</p>
-                  <button class="button is-outlined"></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="bubble" id="personal-record">
           <p class="mb-1"><b class="is-size-5">Personal Record</b></p>
           <div class="columns">
@@ -87,6 +75,7 @@
 <script setup lang="ts">
 import { isLoggedIn } from "../stores/session";
 import LoginView from "./LoginView.vue";
+import WorkoutSession from "../components/WorkoutSession.vue";
 </script>
 
 <style scoped>
@@ -98,11 +87,6 @@ main {
 a {
   color: white;
   text-decoration: none;
-}
-
-.current-workout button {
-  width: 100%;
-  height: 1em;
 }
 
 .setup-workout {
