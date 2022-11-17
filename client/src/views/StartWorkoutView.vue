@@ -43,7 +43,7 @@
               </p>
             </div>
             <div class="bubble"><p>Exercise Quantity: 1</p></div>
-            <button id="add-workout-submit" class="bubble mb-5">
+            <button id="add-workout-submit" class="button bubble mb-5">
               <p>Done</p>
             </button>
             <div class="bubble has-text-centered" id="date-select">
@@ -55,22 +55,32 @@
           </div>
         </div>
         <div class="column is-3">
-          <div class="column is-5">
-            <div class="bubble mt-6">
-              <p class="has-text-centered py-2"><b>Energy Meter</b></p>
-              <div id="rpe"></div>
-              <div id="energy-bar">
-                <div id="one" class="bar red"></div>
-                <div id="two" class="bar red"></div>
-                <div id="three" class="bar red"></div>
-                <div id="four" class="bar yellow"></div>
-                <div id="five" class="bar yellow"></div>
-                <div id="six" class="bar yellow"></div>
-                <div id="seven" class="bar yellow"></div>
-                <div id="eight" class="bar green"></div>
-                <div id="nine" class="bar green"></div>
-                <div id="ten" class="bar green"></div>
-              </div>
+          <div id="current-date-select">
+            <a class="icon pr-3"
+              ><i class="fa fa-regular fa-arrow-left is-size-2"></i
+            ></a>
+            <div id="current-date" class="bubble">
+              <p class="is-size-4">Thursday</p>
+              <p class="is-size-4">11/16/22</p>
+            </div>
+            <a class="icon pl-3"
+              ><i class="fa fa-regular fa-arrow-right is-size-2"></i
+            ></a>
+          </div>
+          <div class="bubble mt-6">
+            <p class="has-text-centered py-2"><b>Energy Meter</b></p>
+            <div id="rpe"></div>
+            <div id="energy-bar">
+              <div id="one" class="bar red"></div>
+              <div id="two" class="bar red"></div>
+              <div id="three" class="bar red"></div>
+              <div id="four" class="bar yellow"></div>
+              <div id="five" class="bar yellow"></div>
+              <div id="six" class="bar yellow"></div>
+              <div id="seven" class="bar yellow"></div>
+              <div id="eight" class="bar green"></div>
+              <div id="nine" class="bar green"></div>
+              <div id="ten" class="bar green"></div>
             </div>
           </div>
         </div>
@@ -150,7 +160,7 @@ p {
 }
 
 #calendar {
-  padding: 1.2em 1.7em;
+  padding: 1rem 2.5rem 0.5rem 2.5rem;
   text-align: center;
   margin-left: 7rem;
 }
@@ -212,6 +222,26 @@ p {
 
 #date-select a {
   padding: 0 1rem;
+}
+
+#current-date {
+  border-radius: 3rem;
+  line-height: 1.8rem;
+  padding: 0.5rem 2rem;
+  margin-top: 1rem;
+  display: inline-block;
+}
+
+#current-date-select {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-around; */
+}
+
+#current-date-select a {
+  margin: 0.3rem;
+  margin-top: 1.1rem;
+  color: white;
 }
 
 #energy-bar {
