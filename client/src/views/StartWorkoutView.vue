@@ -29,8 +29,24 @@
       </div>
       <div class="columns">
         <div class="column is-1">
-          <div class="bubble" id="calendar">
-            <span class="icon"><i class="fa fa-calendar is-size-1"></i></span>
+          <div id="current-date-select">
+            <a class="icon pr-3"
+              ><i class="fa fa-regular fa-arrow-left is-size-2"></i
+            ></a>
+            <div id="current-date" class="bubble">
+              <div>
+                <span class="icon"
+                  ><i class="fa fa-calendar is-size-1"></i
+                ></span>
+              </div>
+              <div>
+                <p class="is-size-5">Thursday</p>
+                <p class="is-size-5">11/16/22</p>
+              </div>
+            </div>
+            <a class="icon pl-3"
+              ><i class="fa fa-regular fa-arrow-right is-size-2"></i
+            ></a>
           </div>
         </div>
         <div class="column is-8">
@@ -55,18 +71,6 @@
           </div>
         </div>
         <div class="column is-3">
-          <div id="current-date-select">
-            <a class="icon pr-3"
-              ><i class="fa fa-regular fa-arrow-left is-size-2"></i
-            ></a>
-            <div id="current-date" class="bubble">
-              <p class="is-size-4">Thursday</p>
-              <p class="is-size-4">11/16/22</p>
-            </div>
-            <a class="icon pl-3"
-              ><i class="fa fa-regular fa-arrow-right is-size-2"></i
-            ></a>
-          </div>
           <div class="bubble mt-6">
             <p class="has-text-centered py-2"><b>Energy Meter</b></p>
             <div id="rpe"></div>
@@ -159,12 +163,6 @@ p {
   text-align: center;
 }
 
-#calendar {
-  padding: 1rem 2.5rem 0.5rem 2.5rem;
-  text-align: center;
-  margin-left: 7rem;
-}
-
 .record-col {
   display: flex;
   flex-direction: column;
@@ -228,8 +226,15 @@ p {
   border-radius: 3rem;
   line-height: 1.8rem;
   padding: 0.5rem 2rem;
+}
+
+#current-date {
+  display: flex;
+}
+
+#current-date div:first-child span {
   margin-top: 1rem;
-  display: inline-block;
+  margin-right: 1.3rem;
 }
 
 #current-date-select {
@@ -240,7 +245,6 @@ p {
 
 #current-date-select a {
   margin: 0.3rem;
-  margin-top: 1.1rem;
   color: white;
 }
 

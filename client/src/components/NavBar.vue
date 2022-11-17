@@ -60,6 +60,9 @@ let isActive = ref(false);
 
 <style>
 .router-link-active {
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
   border-bottom: #df0a0a 2px solid;
 }
 
