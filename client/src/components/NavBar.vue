@@ -58,7 +58,7 @@ let isActive = ref(false);
   </nav>
 </template>
 
-<style>
+<style scoped>
 .router-link-active {
   outline: 0;
   border: none;

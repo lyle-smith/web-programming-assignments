@@ -7,7 +7,7 @@ import { RouterLink } from "vue-router";
   <div class="columns mt-6">
     <div class="column is-3"></div>
     <div class="column is-6">
-      <h3 class="subtitle is-3">Login</h3>
+      <h3 class="subtitle is-3">Sign Up</h3>
       <div class="field">
         <label class="has-text-weight-bold" for="email">Email</label>
         <p class="control has-icons-left has-icons-right">
@@ -32,7 +32,7 @@ import { RouterLink } from "vue-router";
       <div class="field">
         <p class="control">
           <button class="button is-danger is-fullwidth has-text-weight-bold">
-            <span class="is-size-5">Login</span>
+            <span class="is-size-5">Sign Up</span>
           </button>
         </p>
       </div>

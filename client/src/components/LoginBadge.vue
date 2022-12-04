@@ -5,9 +5,9 @@ import { RouterLink } from "vue-router";
 
 <template>
   <div class="buttons" v-if="!isLoggedIn()">
-    <a class="button is-danger">
+    <router-link to="sign-up" class="button is-danger">
       <strong>Sign up</strong>
-    </a>
+    </router-link>
     <div class="navbar-item has-dropdown is-hoverable">
       <router-link to="/login" class="button is-light">Log in</router-link>
       <div class="navbar-dropdown">

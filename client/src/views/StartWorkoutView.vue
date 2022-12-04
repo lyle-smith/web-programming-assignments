@@ -1,5 +1,5 @@
 <template>
-  <main :id="loggedInDisplay" v-if="isLoggedIn()">
+  <main id="loggedInDisplay" v-if="isLoggedIn()">
     <div class="container-fluid">
       <div class="columns mb-5">
         <div class="column">
@@ -31,12 +31,12 @@
         <div class="column is-1">
           <div id="current-date-select">
             <a class="icon pr-3"
-              ><i class="fa fa-regular fa-arrow-left is-size-2"></i
+              ><i class="fas fa-regular fa-arrow-left is-size-2"></i
             ></a>
             <div id="current-date" class="bubble">
               <div>
                 <span class="icon"
-                  ><i class="fa fa-calendar is-size-1"></i
+                  ><i class="fas fa-calendar is-size-1"></i
                 ></span>
               </div>
               <div>
@@ -45,7 +45,7 @@
               </div>
             </div>
             <a class="icon pl-3"
-              ><i class="fa fa-regular fa-arrow-right is-size-2"></i
+              ><i class="fas fa-regular fa-arrow-right is-size-2"></i
             ></a>
           </div>
         </div>
@@ -100,15 +100,7 @@
 import { isLoggedIn } from "../stores/session";
 import LoginView from "./LoginView.vue";
 import WorkoutSession from "../components/WorkoutSession.vue";
-import { ref } from "vue";
 
-const loggedInDisplay = ref("");
-
-if (isLoggedIn()) {
-  loggedInDisplay.value = "loggedInDisplay";
-} else {
-  loggedInDisplay.value = "";
-}
 </script>
 
 <style scoped>
@@ -150,6 +142,9 @@ p {
   width: fit-content;
   color: white;
   background-color: #791a12;
+  box-shadow: 0.1rem 0.2rem 0.5rem 0rem #791a12;
+  -webkit-box-shadow: 0.1rem 0.2rem 0.5rem 0rem #791a12;
+  -moz-box-shadow: 0.1rem 0.2rem 0.5rem 0rem #791a12;
 }
 
 #activity-word {
@@ -313,8 +308,8 @@ p {
 }
 
 #rpe {
-  width: 16rem;
-  height: 16rem;
+  width: 18rem;
+  height: 18rem;
   background-image: url(../assets/RPE-scale.webp);
   background-position: center center;
   background-repeat: no-repeat;
