@@ -1,30 +1,4 @@
-<script setup lang="ts">
-import { addUser } from "../stores/session";
-addUser(
-  "Lyle",
-  "Smith",
-  "lylesmith123",
-  "lylesmith@gmail.com",
-  true,
-  "/src/assets/lyle-smith-pic.jpg"
-);
-addUser(
-  "Michael",
-  "Jordan",
-  "mjordan01",
-  "michaelj@gmail.com",
-  false,
-  "/src/assets/michael-jordan-pic.jpg"
-);
-addUser(
-  "Bill",
-  "Gates",
-  "windows4life",
-  "billyg@microstoft.com",
-  false,
-  "/src/assets/bill-gates-pic.webp"
-);
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main class="columns is-centered is-vcentered is-mobile">

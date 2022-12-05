@@ -1,31 +1,42 @@
-import { reactive } from "vue";
+import myFetch from "@/services/my-fetch";
+import { computed, reactive } from "vue";
+import type { User } from "./users";
 
 const session = reactive({
   user: null as User | null,
+  loading: 0,
+  error: null as string | null,
+  messages: [] as Message[],
   users: [] as User[],
   workoutHistory: [] as WorkoutSession[],
   latestWorkoutHistoryId: 1,
 });
 
-export function addUser(
-  firstName: string,
-  lastName: string,
-  userName: string,
-  email: string,
-  isAdmin: boolean,
-  profilePicture: string
-) {
-  if (!session.users.find((u) => u.userName === userName)) {
-    const user = new User(
-      firstName,
-      lastName,
-      userName,
-      email,
-      isAdmin,
-      profilePicture
-    );
-    session.users.push(user);
+export function setError(error: string | null) {
+  session.error = error;
+  if (error) {
+    session.messages.push({ type: "danger", text: error });
   }
+}
+
+export const isLoading = computed(() => !!session.loading);
+
+export async function api<T>(url: string, data: any = null, method?: string) {
+  session.loading++;
+  setError(null);
+  try {
+    return await myFetch<T>(url, data, method);
+  } catch (error) {
+    setError(error as string);
+  } finally {
+    session.loading--;
+  }
+  return {} as T;
+}
+
+export interface Message {
+  text: string;
+  type: "danger" | "warning" | "success" | "info";
 }
 
 export function removeUser(user: User) {
@@ -36,9 +47,11 @@ export function removeUser(user: User) {
 }
 
 export function login(userName: string) {
-  session.users.forEach((user) => {
-    if (user.userName === userName) {
+  api<User>(`/users/${userName}`).then((user) => {
+    if (user) {
       session.user = user;
+    } else {
+      setError("Invalid user name");
     }
   });
 }
@@ -56,40 +69,6 @@ export function isAdmin() {
     return session.user?.isAdmin;
   } else {
     return false;
-  }
-}
-
-export class User {
-  public firstName: string;
-  public lastName: string;
-  public userName: string;
-  public email: string;
-  public isAdmin: boolean;
-  public profilePicture: string;
-  public workoutHistory: WorkoutSession[];
-
-  constructor(
-    firstName: string,
-    lastName: string,
-    userName: string,
-    email: string,
-    isAdmin: boolean,
-    profilePicture: string
-  ) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.userName = userName;
-    this.email = email;
-    this.isAdmin = isAdmin;
-    this.profilePicture = profilePicture;
-    this.workoutHistory = [];
-  }
-
-  public addWorkoutSession(name: string, duration: number, timeUnit: string) {
-    if (name != "Workout Type" && duration >= 0 && timeUnit != "Time Unit") {
-      const workoutSession = new WorkoutSession(name, duration, timeUnit);
-      this.workoutHistory.push(workoutSession);
-    }
   }
 }
 

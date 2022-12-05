@@ -9,16 +9,22 @@ POST http://localhost:3003/api/v1/users/lyman93
 CONTENT-TYPE: application/json
 
 {
-  "firstName": "Lyle",
-  "lastName": "Smith",
   "userName": "lyman93",
   "password": "password",
   "email": "email@email.com",
   "isAdmin": true,
-  "profilePicture": "./images/profilePicture.jpg",
-  "workoutHistory": ["strength", "cardio", "yoga"]
+  "profilePicture": "./images/profilePicture.jpg"
+}
+
+###
+POST http://localhost:3003/api/v1/users/authenticate
+CONTENT-TYPE: application/json
+
+{
+  "userName": "lyman93",
+  "password": "password"
 }
 
 ###
 
-DELETE http://localhost:3003/api/v1/users/lyman93
+DELETE http://localhost:3003/api/v1/users/lyman

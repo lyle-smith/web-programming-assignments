@@ -19,7 +19,7 @@ import { RouterLink } from "vue-router";
   </div>
   <div v-else>
     <a class="navbar-item" @click="logout()">
-      {{ session.user?.firstName }} {{ session.user?.lastName }}
+      {{ session.user?.userName }}
     </a>
   </div>
 </template>

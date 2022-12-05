@@ -14,8 +14,13 @@ app.
     .then((x) => res.status(200).send(x))
     .catch(next);
   })
-  .post('/:username', (req, res, next) => {
-    users.addUser(req.body)
+  .post('/authenticate', (req, res, next) => {
+    users.authenticate(req.body.userName, req.body.password)
+    .then((x) => res.status(200).send(x))
+    .catch(next);
+  })
+  .post('/createUser', (req, res, next) => {
+    users.createUser(req.body)
     .then((x) => res.status(200).send(x))
     .catch(next);
   })

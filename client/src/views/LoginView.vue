@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { RouterLink } from "vue-router";
+import { authenticate } from "../stores/users";
+
+let userName = ref("");
+let password = ref("");
 </script>
 
 <template>
@@ -9,9 +14,16 @@ import { RouterLink } from "vue-router";
     <div class="column is-6">
       <h3 class="subtitle is-3">Login</h3>
       <div class="field">
-        <label class="has-text-weight-bold" for="email">Email</label>
+        <label class="has-text-weight-bold" for="username"
+          >Username or Email</label
+        >
         <p class="control has-icons-left has-icons-right">
-          <input class="input" type="email" placeholder="Email" />
+          <input
+            class="input"
+            type="username"
+            placeholder="Email"
+            v-model="userName"
+          />
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
@@ -23,7 +35,12 @@ import { RouterLink } from "vue-router";
       <div class="field">
         <label class="has-text-weight-bold" for="password">Password</label>
         <p class="control has-icons-left">
-          <input class="input" type="password" placeholder="Password" />
+          <input
+            class="input"
+            type="password"
+            placeholder="Password"
+            v-model="password"
+          />
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
@@ -31,7 +48,10 @@ import { RouterLink } from "vue-router";
       </div>
       <div class="field">
         <p class="control">
-          <button class="button is-danger is-fullwidth has-text-weight-bold">
+          <button
+            class="button is-danger is-fullwidth has-text-weight-bold"
+            @click="authenticate(userName, password)"
+          >
             <span class="is-size-5">Login</span>
           </button>
         </p>
