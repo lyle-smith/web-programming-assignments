@@ -3,6 +3,7 @@ import type { WorkoutSession } from "./workout-session";
 import type { Message } from "./session";
 
 export interface User {
+  _id: string;
   userName: string;
   password: string;
   email: string;

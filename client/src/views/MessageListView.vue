@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import session, { isLoading } from "../stores/session";
+
+function deleteMessage(id: number) {
+  session.messages.splice(id, 1);
+}
 </script>
 
 <template>

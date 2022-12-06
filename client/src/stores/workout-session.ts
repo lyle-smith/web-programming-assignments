@@ -1,6 +1,15 @@
 export interface WorkoutSession {
-  id: number;
+  _id: string;
+  userId: string;
+  date: Date;
   workoutType: string;
-  duration: number;
-  timeUnit: string;
+  exercises: Exercise[];
+}
+
+export interface Exercise {
+  name: string;
+  weight: number;
+  sets: number;
+  reps: number;
+  rpe: number;
 }

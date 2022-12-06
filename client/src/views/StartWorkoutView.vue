@@ -1,9 +1,57 @@
+<script setup lang="ts">
+import { isLoggedIn } from "../stores/session";
+import LoginView from "./LoginView.vue";
+import WorkoutSession from "../components/WorkoutSession.vue";
+import { computed, ref } from "vue";
+
+let date = ref(new Date());
+const weekday = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+function setDate(year: number, month: number, day: number) {
+  date.value = new Date(year, month, day);
+}
+
+function incrementDate() {
+  setDate(
+    date.value.getFullYear(),
+    date.value.getMonth(),
+    date.value.getDate() + 1
+  );
+}
+
+function decrementDate() {
+  setDate(
+    date.value.getFullYear(),
+    date.value.getMonth(),
+    date.value.getDate() - 1
+  );
+}
+
+const day = computed(() => weekday[date.value.getDay()]);
+const formattedDate = computed(() => {
+  let month = date.value.getMonth() + 1;
+  let day = date.value.getDate();
+  let year = date.value.getFullYear();
+  return `${month}/${day}/${year - 2000}`;
+});
+
+const displaySetup = ref(true);
+</script>
+
 <template>
   <main id="loggedInDisplay" v-if="isLoggedIn()">
     <div class="container-fluid">
       <div class="columns mb-5">
         <div class="column">
-          <h1 class="title has-text-light" id="header">
+          <h1 class="title has-text-light ml-6" id="header">
             <b>Workout</b><br /><span id="activity-word">Activity</span>
           </h1>
         </div>
@@ -30,7 +78,7 @@
       <div class="columns">
         <div class="column is-1">
           <div id="current-date-select">
-            <a class="icon pr-3"
+            <a class="icon pr-3" @click.prevent="decrementDate"
               ><i class="fas fa-regular fa-arrow-left is-size-2"></i
             ></a>
             <div id="current-date" class="bubble">
@@ -40,26 +88,49 @@
                 ></span>
               </div>
               <div>
-                <p class="is-size-5">Thursday</p>
-                <p class="is-size-5">11/16/22</p>
+                <p class="is-size-5">{{ day }}</p>
+                <p class="is-size-5">{{ formattedDate }}</p>
               </div>
             </div>
-            <a class="icon pl-3"
+            <a id="right-arrow" class="icon pl-3" @click.prevent="incrementDate"
               ><i class="fas fa-regular fa-arrow-right is-size-2"></i
             ></a>
           </div>
         </div>
         <div class="column is-8">
           <div class="setup-workout">
-            <div class="bubble"><p>Add Workout</p></div>
-            <div class="bubble">
-              <p>
-                Training Type:
-                <span class="ml-5" id="training-type">Bodybuilding</span>
-              </p>
+            <button
+              id="add-workout-button"
+              class="button"
+              @click="displaySetup = true"
+            >
+              <p>Add Workout</p>
+            </button>
+            <div class="bubble" v-if="displaySetup">
+              <label for="training-type"> Training Type: </label>
+              <!-- class="button is-outlined is-white ml-5" -->
+              <div class="select is-rounded is-medium">
+                <select
+                  name="training-type"
+                  id="training-type"
+                  class="button is-outlined is-white ml-5"
+                >
+                  <option value="bodybuilding">Bodybuilding</option>
+                  <option value="powerlifting">Powerlifting</option>
+                  <option value="crossfit">Crossfit</option>
+                </select>
+              </div>
+              <!-- <span class="ml-5" id="training-type">Bodybuilding</span> -->
             </div>
-            <div class="bubble"><p>Exercise Quantity: 1</p></div>
-            <button id="add-workout-submit" class="button bubble mb-5">
+            <div class="bubble" v-if="displaySetup">
+              <p>Exercise Quantity: 1</p>
+            </div>
+            <button
+              id="add-workout-submit"
+              class="button mb-5"
+              v-if="displaySetup"
+              @click="displaySetup = false"
+            >
               <p>Done</p>
             </button>
             <div class="bubble has-text-centered" id="date-select">
@@ -96,13 +167,6 @@
   </main>
 </template>
 
-<script setup lang="ts">
-import { isLoggedIn } from "../stores/session";
-import LoginView from "./LoginView.vue";
-import WorkoutSession from "../components/WorkoutSession.vue";
-
-</script>
-
 <style scoped>
 #loggedInDisplay {
   background-image: url(../assets/start-workout-background.png);
@@ -124,12 +188,13 @@ h1 {
   font-size: 5.5rem;
 }
 
-p {
+p,
+label {
   font-size: 2rem;
 }
 
 .container-fluid {
-  margin: 0 2rem 0 8rem;
+  margin: 0 2rem 0 6rem;
 }
 
 #header {
@@ -189,18 +254,41 @@ p {
   margin-bottom: 0.6rem;
 }
 
-.setup-workout .bubble:first-child {
-  margin-bottom: 1rem;
+#add-workout-button {
+  border-radius: 1.8rem;
+  width: fit-content;
+  margin-top: 0.6rem;
+  margin-bottom: 2rem;
+  color: white;
+  background-color: #791a12;
+  padding: 2rem 3rem;
+  border: none;
+}
+
+#add-workout-button:hover {
+  background-color: rgba(143, 35, 25, 0.918);
 }
 
 .setup-workout .bubble:first-child {
   padding: 1em 5em;
 }
 
-#training-type {
-  border: 2px solid white;
-  border-radius: 1em;
-  padding: 0.4em 0.7em;
+/* #training-type {
+  border-radius: 3rem;
+} */
+
+#add-workout-submit {
+  border-radius: 1.8rem;
+  width: fit-content;
+  margin-bottom: 1rem;
+  color: white;
+  background-color: #791a12;
+  padding: 1rem 2rem;
+  border: none;
+}
+
+#add-workout-submit:hover {
+  background-color: rgba(143, 35, 25, 0.918);
 }
 
 #add-workout-submit p {
@@ -221,9 +309,7 @@ p {
   border-radius: 3rem;
   line-height: 1.8rem;
   padding: 0.5rem 2rem;
-}
-
-#current-date {
+  min-width: 13rem;
   display: flex;
 }
 
@@ -241,6 +327,10 @@ p {
 #current-date-select a {
   margin: 0.3rem;
   color: white;
+}
+
+#right-arrow {
+  z-index: 1;
 }
 
 #energy-bar {

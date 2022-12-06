@@ -1,10 +1,20 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import router from "@/router";
+import { isLoggedIn } from "@/stores/session";
+import { ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { authenticate } from "../stores/users";
 
 let userName = ref("");
 let password = ref("");
+
+// const loggedIn = computed(() => {
+//   if (isLoggedIn()) return true;
+//   else return false;
+// });
+watch(isLoggedIn, () => {
+  if (isLoggedIn()) router.push("/");
+});
 </script>
 
 <template>
