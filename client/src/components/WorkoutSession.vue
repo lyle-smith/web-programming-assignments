@@ -1,6 +1,59 @@
+<script setup lang="ts">
+import {
+  workoutSession,
+  getUserWorkoutsForDate,
+  formattedWorkoutDate,
+} from "../stores/workouts";
+import session from "../stores/session";
+import { watch } from "vue";
+
+if (session.user)
+  getUserWorkoutsForDate(
+    session.user?.userName,
+    new Date(formattedWorkoutDate.value)
+  ).then((x) => {
+    workoutSession.value = x;
+    console.log(
+      workoutSession.value.length + " " + workoutSession.value[0].trainingType
+    );
+    console.log(workoutSession.value[0].exercises[0].name);
+  });
+
+watch(formattedWorkoutDate, () => {
+  if (session.user)
+    getUserWorkoutsForDate(
+      session.user?.userName,
+      new Date(formattedWorkoutDate.value)
+    ).then((x) => {
+      workoutSession.value = x;
+      console.log(
+        workoutSession.value.length + " " + workoutSession.value[0].trainingType
+      );
+      console.log(workoutSession.value[0].exercises[0].name);
+    });
+});
+</script>
+
 <template>
-  <div class="bubble px-4 py-3 mt-6">
-    <p class="pl-5 pb-3 pt-4">Bodybuilding Workout</p>
+  <div class="bubble px-4 py-3 mt-6" v-if="session.user">
+    <select class="button is-outlined is-white">
+      <option
+        v-for="workout in workoutSession"
+        :key="workout._id"
+        :value="workout.trainingType"
+      >
+        {{
+          workout.trainingType.charAt(0).toUpperCase() +
+          workout.trainingType.slice(1)
+        }}
+      </option>
+      <!-- <option value="bodybuilding">
+        {{ workoutSessions ? workoutSessions[0].trainingType : "" }}
+      </option> -->
+      <!-- <option value="powerlifting">Powerlifting Workout</option>
+      <option value="crossfit">Crossfit Workout</option> -->
+    </select>
+    <!-- <p class="pl-5 pb-3 pt-4">Bodybuilding Workout</p> -->
     <div id="exercise-list">
       <p></p>
       <p>Weight</p>
@@ -26,12 +79,17 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
-
 <style scoped>
 p {
   text-align: center;
   font-size: 2rem;
+}
+
+select {
+  display: block;
+  margin: 1.5rem auto;
+  font-size: 1.5rem;
+  border-radius: 3rem;
 }
 
 input {

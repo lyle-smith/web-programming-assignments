@@ -1,5 +1,4 @@
 import session, { api } from "./session";
-import type { WorkoutSession } from "./workout-session";
 import type { Message } from "./session";
 
 export interface User {
@@ -9,7 +8,8 @@ export interface User {
   email: string;
   isAdmin: boolean;
   profilePicture: string;
-  workoutHistory: WorkoutSession[];
+  friends: string[];
+  workoutHistory: string[];
 }
 
 export function createUser(userName: string, email: string, password: string) {

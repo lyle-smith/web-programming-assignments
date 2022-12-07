@@ -28,3 +28,24 @@ CONTENT-TYPE: application/json
 ###
 
 DELETE http://localhost:3003/api/v1/users/lyman
+
+###
+
+POST http://localhost:3003/api/v1/workouts/add-workout
+CONTENT-TYPE: application/json
+
+{
+  "userName": "lyman93",
+  "trainingType": "strength",
+  "exerciseQuantity": 2,
+  "date": "2022-12-04T05:00:00.000Z"
+}
+
+###
+POST http://localhost:3003/api/v1/workouts/date-workouts
+CONTENT-TYPE: application/json
+
+{
+  "userName": "lyman93",
+  "date": "2022-12-04T05:00:00.000Z"
+}

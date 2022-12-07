@@ -1,6 +1,7 @@
 import myFetch from "@/services/my-fetch";
 import { computed, reactive } from "vue";
 import type { User } from "./users";
+import type { Workout } from "./workouts";
 
 const session = reactive({
   user: null as User | null,
@@ -8,7 +9,6 @@ const session = reactive({
   error: null as string | null,
   messages: [] as Message[],
   users: [] as User[],
-  workoutHistory: [] as WorkoutSession[],
   latestWorkoutHistoryId: 1,
 });
 

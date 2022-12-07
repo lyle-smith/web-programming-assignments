@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { isLoggedIn } from "../stores/session";
+import session, { isLoggedIn } from "../stores/session";
 import LoginView from "./LoginView.vue";
 import WorkoutSession from "../components/WorkoutSession.vue";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import {
+  addWorkout,
+  formattedWorkoutDate,
+  getUserWorkoutsForDate,
+  workoutDate,
+} from "../stores/workouts";
 
-let date = ref(new Date());
+workoutDate.value = new Date();
+
 const weekday = [
   "Sunday",
   "Monday",
@@ -15,35 +22,74 @@ const weekday = [
   "Saturday",
 ];
 
-function setDate(year: number, month: number, day: number) {
-  date.value = new Date(year, month, day);
-}
-
 function incrementDate() {
   setDate(
-    date.value.getFullYear(),
-    date.value.getMonth(),
-    date.value.getDate() + 1
+    workoutDate.value.getFullYear(),
+    workoutDate.value.getMonth(),
+    workoutDate.value.getDate() + 1
   );
 }
 
 function decrementDate() {
   setDate(
-    date.value.getFullYear(),
-    date.value.getMonth(),
-    date.value.getDate() - 1
+    workoutDate.value.getFullYear(),
+    workoutDate.value.getMonth(),
+    workoutDate.value.getDate() - 1
   );
 }
 
-const day = computed(() => weekday[date.value.getDay()]);
-const formattedDate = computed(() => {
-  let month = date.value.getMonth() + 1;
-  let day = date.value.getDate();
-  let year = date.value.getFullYear();
-  return `${month}/${day}/${year - 2000}`;
-});
+function setDayOfWeek(dayIndex: number) {
+  if (dayIndex < workoutDate.value.getDay()) {
+    const dateDifference = workoutDate.value.getDay() - dayIndex;
+    for (let i = 0; i < dateDifference; i++) {
+      decrementDate();
+    }
+  } else if (dayIndex > workoutDate.value.getDay()) {
+    const dateDifference = dayIndex - workoutDate.value.getDay();
+    for (let i = 0; i < dateDifference; i++) {
+      incrementDate();
+    }
+  }
+}
 
-const displaySetup = ref(true);
+function setDate(year: number, month: number, day: number) {
+  workoutDate.value = new Date(year, month, day);
+}
+
+const dayOfWeek = computed(() => weekday[workoutDate.value.getDay()]);
+
+const displaySetup = ref(false);
+
+function addWorkoutSession(
+  userName: string | undefined,
+  trainingType: string,
+  exerciseQuantity: number,
+  date: Date
+) {
+  if (exerciseQuantity < 0) {
+    session.messages.push({
+      text: "Error: Exercise quantity must be a valid number",
+      type: "danger",
+    });
+    return;
+  }
+  addWorkout(userName, trainingType, exerciseQuantity, date);
+  displaySetup.value = false;
+}
+
+const exerciseQuantity = ref(1);
+const trainingType = ref("bodybuilding");
+
+const workoutSessions = computed(() => {
+  if (session.user) {
+    return async () =>
+      await getUserWorkoutsForDate(
+        session.user?.userName,
+        new Date(formattedWorkoutDate.value)
+      );
+  }
+  return [];
+});
 </script>
 
 <template>
@@ -88,8 +134,8 @@ const displaySetup = ref(true);
                 ></span>
               </div>
               <div>
-                <p class="is-size-5">{{ day }}</p>
-                <p class="is-size-5">{{ formattedDate }}</p>
+                <p class="is-size-5">{{ dayOfWeek }}</p>
+                <p class="is-size-5">{{ formattedWorkoutDate }}</p>
               </div>
             </div>
             <a id="right-arrow" class="icon pl-3" @click.prevent="incrementDate"
@@ -108,35 +154,63 @@ const displaySetup = ref(true);
             </button>
             <div class="bubble" v-if="displaySetup">
               <label for="training-type"> Training Type: </label>
-              <!-- class="button is-outlined is-white ml-5" -->
               <div class="select is-rounded is-medium">
                 <select
                   name="training-type"
                   id="training-type"
                   class="button is-outlined is-white ml-5"
+                  v-model="trainingType"
                 >
                   <option value="bodybuilding">Bodybuilding</option>
                   <option value="powerlifting">Powerlifting</option>
                   <option value="crossfit">Crossfit</option>
                 </select>
               </div>
-              <!-- <span class="ml-5" id="training-type">Bodybuilding</span> -->
             </div>
             <div class="bubble" v-if="displaySetup">
-              <p>Exercise Quantity: 1</p>
+              <label for="exercise-quantity">Exercise Quantity:</label>
+              <input
+                class="button is-outlined is-white mt-2 ml-5 is-rounded"
+                type="number"
+                name="exercise-quantity"
+                id="exercise-quantity"
+                v-model="exerciseQuantity"
+              />
             </div>
-            <button
-              id="add-workout-submit"
-              class="button mb-5"
-              v-if="displaySetup"
-              @click="displaySetup = false"
-            >
-              <p>Done</p>
-            </button>
+            <div>
+              <button
+                class="button mb-5 add-workout-footer"
+                v-if="displaySetup && session.user"
+                @click="
+                  addWorkoutSession(
+                    session.user?.userName,
+                    trainingType,
+                    exerciseQuantity,
+                    new Date(formattedWorkoutDate)
+                  )
+                "
+              >
+                <p>Add</p>
+              </button>
+              <button
+                class="button mb-5 ml-3 add-workout-footer"
+                v-if="displaySetup && session.user"
+                @click="displaySetup = false"
+              >
+                <p>Cancel</p>
+              </button>
+            </div>
             <div class="bubble has-text-centered" id="date-select">
-              <a href="">S</a> / <a href="">M</a> / <a href="">T</a> /
-              <a href="">W</a> / <a href="">T</a> / <a href="">F</a> /
-              <a href="">S</a>
+              <span v-for="(day, i) in weekday" :key="i">
+                <a
+                  href=""
+                  :class="{ active: i == workoutDate.getDay() }"
+                  @click.prevent="setDayOfWeek(i)"
+                >
+                  {{ day.slice(0, 1) }}</a
+                >
+                <span v-if="i !== 6">/</span>
+              </span>
             </div>
             <WorkoutSession />
           </div>
@@ -273,11 +347,23 @@ label {
   padding: 1em 5em;
 }
 
-/* #training-type {
-  border-radius: 3rem;
-} */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
-#add-workout-submit {
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+#exercise-quantity {
+  width: 4rem;
+}
+
+.add-workout-footer {
   border-radius: 1.8rem;
   width: fit-content;
   margin-bottom: 1rem;
@@ -287,11 +373,31 @@ label {
   border: none;
 }
 
-#add-workout-submit:hover {
+/* #add-workout-submit {
+  border-radius: 1.8rem;
+  width: fit-content;
+  margin-bottom: 1rem;
+  color: white;
+  background-color: #791a12;
+  padding: 1rem 2rem;
+  border: none;
+}
+
+#add-workout-cancel {
+  border-radius: 1.8rem;
+  width: fit-content;
+  margin-bottom: 1rem;
+  color: white;
+  background-color: #791a12;
+  padding: 1rem 2rem;
+  border: none;
+} */
+
+.add-workout-footer:hover {
   background-color: rgba(143, 35, 25, 0.918);
 }
 
-#add-workout-submit p {
+.add-workout-footer p {
   font-size: 1.3rem;
 }
 
@@ -301,7 +407,7 @@ label {
   font-size: 2rem;
 }
 
-#date-select a {
+#date-select span a {
   padding: 0 1rem;
 }
 
@@ -327,6 +433,12 @@ label {
 #current-date-select a {
   margin: 0.3rem;
   color: white;
+}
+
+.active {
+  color: black;
+  font-weight: bold;
+  font-size: 2.4rem;
 }
 
 #right-arrow {
