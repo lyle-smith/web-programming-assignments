@@ -5,7 +5,7 @@ import {
   formattedWorkoutDate,
 } from "../stores/workouts";
 import session from "../stores/session";
-import { watch } from "vue";
+import { watch, ref, computed } from "vue";
 
 if (session.user)
   getUserWorkoutsForDate(
@@ -32,15 +32,23 @@ watch(formattedWorkoutDate, () => {
       console.log(workoutSession.value[0].exercises[0].name);
     });
 });
+
+const currentWorkoutId = ref();
+if (workoutSession.value.length > 0)
+  currentWorkoutId.value = workoutSession.value[0]._id;
+
+const currentWorkout = computed(() => {
+  return workoutSession.value.find((x) => x._id === currentWorkoutId.value);
+});
 </script>
 
 <template>
   <div class="bubble px-4 py-3 mt-6" v-if="session.user">
-    <select class="button is-outlined is-white">
+    <select class="button is-outlined is-white" v-model="currentWorkoutId">
       <option
         v-for="workout in workoutSession"
         :key="workout._id"
-        :value="workout.trainingType"
+        :value="workout._id"
       >
         {{
           workout.trainingType.charAt(0).toUpperCase() +
@@ -55,16 +63,40 @@ watch(formattedWorkoutDate, () => {
     </select>
     <!-- <p class="pl-5 pb-3 pt-4">Bodybuilding Workout</p> -->
     <div id="exercise-list">
-      <p></p>
-      <p>Weight</p>
-      <p>Sets</p>
-      <p>Reps</p>
-      <p>RPE</p>
-      <p>Deadlift</p>
-      <input class="button is-outlined is-white" type="number" />
-      <input class="button is-outlined is-white" type="number" />
-      <input class="button is-outlined is-white" type="number" />
-      <input class="button is-outlined is-white" type="number" />
+      <div class="row">
+        <div style="width: 13.5%"></div>
+        <p>Weight</p>
+        <p>Sets</p>
+        <p>Reps</p>
+        <p>RPE</p>
+      </div>
+      <div
+        class="row"
+        v-for="(exercise, i) in currentWorkout?.exercises"
+        :key="i"
+      >
+        <p class="is-size-4">{{ exercise.name }}</p>
+        <input
+          class="button is-outlined is-white"
+          type="number"
+          :value="exercise.weight"
+        />
+        <input
+          class="button is-outlined is-white"
+          type="number"
+          :value="exercise.sets"
+        />
+        <input
+          class="button is-outlined is-white"
+          type="number"
+          :value="exercise.reps"
+        />
+        <input
+          class="button is-outlined is-white"
+          type="number"
+          :value="exercise.rpe"
+        />
+      </div>
       <button class="button is-outlined is-white pl-3" id="add-exercise">
         <span class="icon pr-4"><i class="fa fa-plus"></i></span> Add Exercise
       </button>
@@ -109,12 +141,20 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-#exercise-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+.row {
+  display: flex;
+  justify-content: space-around;
   align-items: center;
-  column-gap: 1rem;
-  row-gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.row p {
+  font-size: 1.7rem;
+}
+
+.row input {
+  width: 4rem;
+  margin-left: 0.9rem;
 }
 
 #add-exercise {
