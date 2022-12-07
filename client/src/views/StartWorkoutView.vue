@@ -8,6 +8,7 @@ import {
   formattedWorkoutDate,
   getUserWorkoutsForDate,
   workoutDate,
+  workoutSession,
 } from "../stores/workouts";
 
 workoutDate.value = new Date();
@@ -80,15 +81,26 @@ function addWorkoutSession(
 const exerciseQuantity = ref(1);
 const trainingType = ref("bodybuilding");
 
-const workoutSessions = computed(() => {
-  if (session.user) {
-    return async () =>
-      await getUserWorkoutsForDate(
-        session.user?.userName,
-        new Date(formattedWorkoutDate.value)
+if (session.user)
+  getUserWorkoutsForDate(
+    session.user?.userName,
+    new Date(formattedWorkoutDate.value)
+  ).then((x) => {
+    workoutSession.value = x;
+  });
+
+watch(formattedWorkoutDate, () => {
+  if (session.user)
+    getUserWorkoutsForDate(
+      session.user?.userName,
+      new Date(formattedWorkoutDate.value)
+    ).then((x) => {
+      workoutSession.value = x;
+      console.log(
+        workoutSession.value.length + " " + workoutSession.value[0].trainingType
       );
-  }
-  return [];
+      console.log(workoutSession.value[0].exercises[0].name);
+    });
 });
 </script>
 
@@ -212,7 +224,7 @@ const workoutSessions = computed(() => {
                 <span v-if="i !== 6">/</span>
               </span>
             </div>
-            <WorkoutSession />
+            <WorkoutSession v-if="workoutSession.length > 0" />
           </div>
         </div>
         <div class="column is-3">

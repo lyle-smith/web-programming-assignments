@@ -63,6 +63,7 @@ export function addWorkout(
       console.log("user does not exist");
       session.messages.push(res);
     } else {
+      workoutSession.value.push(res);
       return res;
     }
   });
