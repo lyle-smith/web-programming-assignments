@@ -6,6 +6,7 @@ import {
 } from "../stores/workouts";
 import session from "../stores/session";
 import { watch, ref, computed } from "vue";
+import { getExercisesForWorkout } from "@/stores/exercises";
 
 if (session.user)
   getUserWorkoutsForDate(
@@ -13,10 +14,6 @@ if (session.user)
     new Date(formattedWorkoutDate.value)
   ).then((x) => {
     workoutSession.value = x;
-    console.log(
-      workoutSession.value.length + " " + workoutSession.value[0].trainingType
-    );
-    console.log(workoutSession.value[0].exercises[0].name);
   });
 
 watch(formattedWorkoutDate, () => {
@@ -26,19 +23,33 @@ watch(formattedWorkoutDate, () => {
       new Date(formattedWorkoutDate.value)
     ).then((x) => {
       workoutSession.value = x;
-      console.log(
-        workoutSession.value.length + " " + workoutSession.value[0].trainingType
-      );
-      console.log(workoutSession.value[0].exercises[0].name);
+      if (workoutSession.value.length > 0)
+        console.log(
+          workoutSession.value.length +
+            " " +
+            workoutSession.value[0].trainingType
+        );
+      // console.log(workoutSession.value[0].exercises[0].name);
     });
 });
 
-const currentWorkoutId = ref();
-if (workoutSession.value.length > 0)
+const currentWorkoutId = ref(workoutSession.value[0]._id);
+const exerciseList = ref();
+
+watch(workoutSession, () => {
   currentWorkoutId.value = workoutSession.value[0]._id;
+});
 
 const currentWorkout = computed(() => {
-  return workoutSession.value.find((x) => x._id === currentWorkoutId.value);
+  return workoutSession.value.find(
+    (workout) => workout._id === currentWorkoutId.value
+  );
+});
+
+watch(currentWorkout, () => {
+  getExercisesForWorkout(currentWorkout.value?._id)?.then((x) => {
+    exerciseList.value = x;
+  });
 });
 </script>
 
@@ -70,11 +81,7 @@ const currentWorkout = computed(() => {
         <p>Reps</p>
         <p>RPE</p>
       </div>
-      <div
-        class="row"
-        v-for="(exercise, i) in currentWorkout?.exercises"
-        :key="i"
-      >
+      <div class="row" v-for="(exercise, i) in exerciseList" :key="i">
         <p class="is-size-4">{{ exercise.name }}</p>
         <input
           class="button is-outlined is-white"

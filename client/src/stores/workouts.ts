@@ -1,6 +1,6 @@
 import session, { api } from "./session";
 import type { Message } from "./session";
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 
 export const workoutSession = ref([] as Workout[]);
 
@@ -18,15 +18,6 @@ export interface Workout {
   userId: string;
   date: Date;
   trainingType: "strength" | "hypertrophy" | "endurance" | "crossfit";
-  exercises: Exercise[];
-}
-
-export interface Exercise {
-  name: string;
-  weight: number;
-  sets: number;
-  reps: number;
-  rpe: number;
 }
 
 export function getUserWorkoutsForDate(

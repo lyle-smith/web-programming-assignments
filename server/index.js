@@ -3,6 +3,7 @@ const app = express();
 
 const usersController = require('./controllers/users');
 const workoutsController = require('./controllers/workouts');
+const exercisesController = require('./controllers/exercises');
 
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 3000;
@@ -25,7 +26,8 @@ app
   res.status(200).send('Happy New Year!');
 })
 .use('/api/v1/users/', usersController)
-.use('/api/v1/workouts/', workoutsController);
+.use('/api/v1/workouts/', workoutsController)
+.use('/api/v1/exercises/', exercisesController);
 
 // Let client handle routing
 app.get('*', (req, res) => {

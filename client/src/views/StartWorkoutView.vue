@@ -10,6 +10,7 @@ import {
   workoutDate,
   workoutSession,
 } from "../stores/workouts";
+import { addExercise } from "../stores/exercises";
 
 workoutDate.value = new Date();
 
@@ -74,20 +75,35 @@ function addWorkoutSession(
     });
     return;
   }
-  addWorkout(userName, trainingType, exerciseQuantity, date);
+  addWorkout(userName, trainingType, exerciseQuantity, date).then(
+    async (workout) => {
+      for (let i = 0; i < exerciseQuantity; i++) {
+        console.log("adding exercises");
+        await addExercise(userName, workout?._id);
+      }
+    }
+  );
   displaySetup.value = false;
 }
 
 const exerciseQuantity = ref(1);
 const trainingType = ref("bodybuilding");
 
-if (session.user)
-  getUserWorkoutsForDate(
-    session.user?.userName,
-    new Date(formattedWorkoutDate.value)
-  ).then((x) => {
-    workoutSession.value = x;
-  });
+const loggedIn = computed(() => {
+  console.log("change");
+  if (session.user) return true;
+  else return false;
+});
+
+watch(loggedIn, () => {
+  if (loggedIn.value)
+    getUserWorkoutsForDate(
+      session.user?.userName,
+      new Date(formattedWorkoutDate.value)
+    ).then((x) => {
+      workoutSession.value = x;
+    });
+});
 
 watch(formattedWorkoutDate, () => {
   if (session.user)
@@ -96,10 +112,13 @@ watch(formattedWorkoutDate, () => {
       new Date(formattedWorkoutDate.value)
     ).then((x) => {
       workoutSession.value = x;
-      console.log(
-        workoutSession.value.length + " " + workoutSession.value[0].trainingType
-      );
-      console.log(workoutSession.value[0].exercises[0].name);
+      if (workoutSession.value.length > 0)
+        console.log(
+          workoutSession.value.length +
+            " " +
+            workoutSession.value[0].trainingType
+        );
+      // console.log(workoutSession.value[0].exercises[0].name);
     });
 });
 </script>

@@ -1,7 +1,6 @@
 import myFetch from "@/services/my-fetch";
 import { computed, reactive } from "vue";
 import type { User } from "./users";
-import type { Workout } from "./workouts";
 
 const session = reactive({
   user: null as User | null,

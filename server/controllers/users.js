@@ -24,6 +24,11 @@ app.
     .then((x) => res.status(200).send(x))
     .catch(next);
   })
+  .post('/createAdmin', (req, res, next) => {
+    users.createAdmin(req.body)
+    .then((x) => res.status(200).send(x))
+    .catch(next);
+  })
   .delete('/:username', (req, res, next) => {
     users.deleteUser(req.params.username)
     .then((x) => res.status(200).send(x))

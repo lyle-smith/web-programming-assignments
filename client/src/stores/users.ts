@@ -9,7 +9,6 @@ export interface User {
   isAdmin: boolean;
   profilePicture: string;
   friends: string[];
-  workoutHistory: string[];
 }
 
 export function createUser(userName: string, email: string, password: string) {
@@ -20,8 +19,26 @@ export function createUser(userName: string, email: string, password: string) {
   );
 }
 
+export function createAdmin(userName: string, email: string, password: string) {
+  return api<Message>("users/createAdmin", { userName, email, password }).then(
+    (res) => {
+      if (res.type === "danger") session.messages.push(res);
+    }
+  );
+}
+
+export function deleteUser(userName: string) {
+  return api<Message>(`users/${userName}`, {}, "DELETE").then((res) => {
+    if (res.type === "danger") session.messages.push(res);
+  });
+}
+
 export function getUser(userName: string) {
   return api<User>(`users/${userName}`);
+}
+
+export function getUsers() {
+  return api<User>(`users`);
 }
 
 export function authenticate(userName: string, password: string) {

@@ -54,7 +54,7 @@ async function createUser(data) {
       email: data.email,
       isAdmin: false,
       profilePicture: "../../client/src/assets/profilePicture.jpg",
-      workoutHistory: [],
+      friends: [],
     }
     await users.insertOne(user);
     message.text = "Account successfully created!";
@@ -63,18 +63,63 @@ async function createUser(data) {
   }
 }
 
+async function createAdmin(data) {
+  const users = await collection();
+  const existingUser = await users.findOne({ userName: data.userName });
+  let message = {
+    text: "",
+    type: "",
+  }
+  if (existingUser) {
+    message.text = "Error! Username already exists";
+    message.type = "danger";
+    return message;
+  } else {
+    const user = {
+      userName: data.userName,
+      password: data.password,
+      email: data.email,
+      isAdmin: true,
+      profilePicture: "../../client/src/assets/profilePicture.jpg",
+      friends: [],
+    }
+    await users.insertOne(user);
+    message.text = "Account successfully created!";
+    message.type = "success";
+    return message;
+  }
+}
+
+
 async function deleteUser(userName) {
   const users = await collection();
   const existingUser = await users.findOne({ userName });
+  let message = {
+    text: "",
+    type: "",
+  }
   if (!existingUser) {
-    throw {
-      httpCode: 400,
-      message: "User does not exist",
-    };
+    message.text = "Error! User does not exist!";
+    message.type = "danger";
+    return message;
   } else {
     await users.deleteOne({ userName });
     return existingUser;
   }
+}
+
+async function getUserId(userName) {
+  const user = await getUser(userName);
+
+  if(!user) {
+    let message = {
+      text: "User does not exist",
+      type: "danger",
+    }
+    return message;
+  }
+  const userId = user._id;
+  return userId;
 }
 
 
@@ -84,4 +129,6 @@ module.exports = {
   createUser,
   deleteUser,
   authenticate,
+  getUserId,
+  createAdmin,
 };

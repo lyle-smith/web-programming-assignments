@@ -49,3 +49,17 @@ CONTENT-TYPE: application/json
   "userName": "lyman93",
   "date": "2022-12-04T05:00:00.000Z"
 }
+
+###
+POST http://localhost:3003/api/v1/exercises/add-exercise
+CONTENT-TYPE: application/json
+
+{
+  "userName": "lyman93",
+  "workoutId": "638ffb59cc59f9867d79bcd1"
+}
+
+###
+http://localhost:3003/api/v1/exercises/63915a9f9a1b8894eecd9bde
+
+###
