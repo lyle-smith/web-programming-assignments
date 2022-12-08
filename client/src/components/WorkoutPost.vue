@@ -37,10 +37,6 @@ export default {
       type: String,
       required: true,
     },
-    thisWorkout: {
-      type: Object,
-      required: true,
-    },
   },
 };
 </script>
