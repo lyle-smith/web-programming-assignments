@@ -12,13 +12,10 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "build": "npm i --workspace=client && npm run build --workspace=client",
+    "build": "npm i && npm run build",
     "dev": "nodemon --watch server server/index.js",
     "start": "node server/index.js"
   },
-  "workspaces": [
-    "client"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lyle-smith/web-programming-classwork.git"
