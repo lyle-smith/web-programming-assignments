@@ -6,37 +6,21 @@
   </div>
   <div class="column is-4">
     <p>
-      <span class="has-text-weight-semibold pr-1"
-        >{{ firstName }} {{ lastName }}</span
-      >
       <small
         ><span class="is-italic pr-3">@{{ username }}</span>
-        <span>Thursday, October 20, 2022</span></small
+        <span>{{ date }}</span></small
       >
     </p>
     <p class="is-size-5">
       Completed a
-      <span class="has-text-weight-semibold">{{ workoutType }}</span> workout in
-      <span class="has-text-weight-semibold"
-        >{{ workoutTime }} {{ timeUnit }}</span
-      >
+      <span class="has-text-weight-semibold">{{ workoutType }}</span> workout
     </p>
   </div>
 </template>
 
 <script lang="ts">
-// const date = Date.now()
-// const year = date.getYear();
 export default {
   props: {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
     username: {
       type: String,
       required: true,
@@ -45,16 +29,16 @@ export default {
       type: String,
       required: true,
     },
-    workoutTime: {
-      type: String,
-      required: true,
-    },
-    timeUnit: {
-      type: String,
-      required: true,
-    },
     profilePicture: {
       type: String,
+      required: true,
+    },
+    date: {
+      type: String,
+      required: true,
+    },
+    thisWorkout: {
+      type: Object,
       required: true,
     },
   },

@@ -20,6 +20,18 @@ export interface Workout {
   trainingType: "strength" | "hypertrophy" | "endurance" | "crossfit";
 }
 
+export function getUserWorkouts(userName: string) {
+  return api<Workout[] | Message>(`workouts/${userName}`).then((res) => {
+    if ("text" in res) {
+      console.log("user does not exist");
+      session.messages.push(res);
+      return [];
+    } else {
+      return res;
+    }
+  });
+}
+
 export function getUserWorkoutsForDate(
   userName: string | undefined,
   date: Date

@@ -58,27 +58,15 @@
         </div>
       </div>
     </div>
-    <div class="columns is-centered">
+    <div
+      class="columns is-centered mt-4"
+      v-for="workout in workoutList"
+      :key="workout._id"
+    >
       <WorkoutPost
         v-if="session.user"
-        first-name="Bob"
-        last-name="Ross"
         :username="session.user?.userName"
-        workout-type="strength"
-        workout-time="40"
-        time-unit="minutes"
-        :profile-picture="session.user?.profilePicture"
-      />
-    </div>
-    <div class="columns is-centered mt-4">
-      <WorkoutPost
-        v-if="session.user"
-        first-name="Alex"
-        last-name="Kyle"
-        :username="session.user?.userName"
-        workout-type="strength"
-        workout-time="2"
-        time-unit="hours"
+        :workout-type="workout.trainingType"
         :profile-picture="session.user?.profilePicture"
       />
     </div>
@@ -101,13 +89,12 @@
     >
       <WorkoutPost
         v-if="session.user"
-        first-name="Lyle"
-        last-name="Smith"
         :username="session.user?.userName"
         :workout-type="workout.trainingType"
         workout-time="4"
         time-unit="Minutes"
         :profile-picture="session.user?.profilePicture"
+        date="(11/4/2020)"
       />
     </div>
   </main>
@@ -121,12 +108,23 @@ import session, { isLoggedIn } from "../stores/session";
 import LoginView from "./LoginView.vue";
 import WorkoutPost from "../components/WorkoutPost.vue";
 import { ref } from "vue";
-import { workoutSession } from "../stores/workouts";
+import { getUserWorkouts, workoutSession } from "../stores/workouts";
 
 let displayAddWorkout = ref(false);
 let timeUnit = ref("Minutes");
 let duration = ref(0);
 let workoutType = ref("Strength");
+
+const workoutList = ref();
+
+if (session.user)
+  getUserWorkouts(session.user?.userName).then((workouts) => {
+    workoutList.value = workouts;
+  });
+
+function formatDate(date: Date) {
+  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+}
 </script>
 
 <style scoped>

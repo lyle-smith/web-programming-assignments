@@ -13,6 +13,11 @@ app.
     workouts.getUserWorkoutsForDate(req.body.userName, req.body.date)
     .then((x) => res.status(200).send(x))
     .catch(next)
+  })
+  .get('/:userName', (req, res, next) => {
+    workouts.getUserWorkouts(req.params.userName)
+    .then((x) => res.status(200).send(x))
+    .catch(next)
   });
 
 

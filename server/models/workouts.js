@@ -11,6 +11,17 @@ async function collection() {
   return client.db("special").collection(COLLECTION_NAME);
 }
 
+async function getUserWorkouts(userName) {
+  const userId = await getUserId(userName);
+
+  if("text" in userId && "type" in userId)
+    return userId;
+
+  const workouts = await collection();
+  const userWorkouts = await workouts.find({ userId }).toArray();
+  return userWorkouts;
+}
+
 async function getUserWorkoutsForDate(userName, date) {
   const userId = await getUserId(userName);
 
@@ -43,4 +54,5 @@ async function addWorkout(userName, trainingType, exerciseQuantity, date) {
 module.exports = {
   addWorkout,
   getUserWorkoutsForDate,
+  getUserWorkouts,
 };
