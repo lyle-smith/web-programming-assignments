@@ -53,28 +53,16 @@
             </div>
           </div>
           <div class="control">
-            <button
-              type="submit"
-              class="button is-danger"
-              @click="
-                session.user?.addWorkoutSession(
-                  workoutType,
-                  duration,
-                  timeUnit
-                );
-                displayAddWorkout = false;
-              "
-            >
-              Add
-            </button>
+            <button type="submit" class="button is-danger">Add</button>
           </div>
         </div>
       </div>
     </div>
     <div class="columns is-centered">
       <WorkoutPost
-        :first-name="session.user?.firstName"
-        :last-name="session.user?.lastName"
+        v-if="session.user"
+        first-name="Bob"
+        last-name="Ross"
         :username="session.user?.userName"
         workout-type="strength"
         workout-time="40"
@@ -84,8 +72,9 @@
     </div>
     <div class="columns is-centered mt-4">
       <WorkoutPost
-        :first-name="session.user?.firstName"
-        :last-name="session.user?.lastName"
+        v-if="session.user"
+        first-name="Alex"
+        last-name="Kyle"
         :username="session.user?.userName"
         workout-type="strength"
         workout-time="2"
@@ -95,8 +84,9 @@
     </div>
     <div class="columns is-centered mt-4">
       <WorkoutPost
-        :first-name="session.user?.firstName"
-        :last-name="session.user?.lastName"
+        v-if="session.user"
+        first-name="Mehdi"
+        last-name="Bueno"
         :username="session.user?.userName"
         workout-type="cardio"
         workout-time="16"
@@ -106,16 +96,17 @@
     </div>
     <div
       class="columns is-centered mt-4"
-      v-for="workout in session.user?.workoutHistory"
-      :key="workout.id"
+      v-for="workout in workoutSession"
+      :key="workout._id"
     >
       <WorkoutPost
-        :first-name="session.user?.firstName"
-        :last-name="session.user?.lastName"
+        v-if="session.user"
+        first-name="Lyle"
+        last-name="Smith"
         :username="session.user?.userName"
-        :workout-type="workout.name"
-        :workout-time="workout.duration.toString()"
-        :time-unit="workout.timeUnit"
+        :workout-type="workout.trainingType"
+        workout-time="4"
+        time-unit="Minutes"
         :profile-picture="session.user?.profilePicture"
       />
     </div>
@@ -130,6 +121,7 @@ import session, { isLoggedIn } from "../stores/session";
 import LoginView from "./LoginView.vue";
 import WorkoutPost from "../components/WorkoutPost.vue";
 import { ref } from "vue";
+import { workoutSession } from "../stores/workouts";
 
 let displayAddWorkout = ref(false);
 let timeUnit = ref("Minutes");
