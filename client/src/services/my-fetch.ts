@@ -1,4 +1,4 @@
-export const API_ROOT = "http://localhost:3003/api/v1/";
+export const API_ROOT = import.meta.env.VITE_API_ROOT;
 
 export default function myFetch<T>(
   url: string,
