@@ -47,9 +47,10 @@ const currentWorkout = computed(() => {
 });
 
 watch(currentWorkout, () => {
-  getExercisesForWorkout(currentWorkout.value?._id)?.then((x) => {
-    exerciseList.value = x;
-  });
+  if(currentWorkout.value)
+    getExercisesForWorkout(currentWorkout.value?._id)?.then((x) => {
+      exerciseList.value = x;
+    });
 });
 </script>
 
