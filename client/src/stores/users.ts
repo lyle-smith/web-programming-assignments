@@ -9,6 +9,7 @@ export interface User {
   isAdmin: boolean;
   profilePicture: string;
   friends: string[];
+  friendRequests: string[];
 }
 
 export function createUser(userName: string, email: string, password: string) {

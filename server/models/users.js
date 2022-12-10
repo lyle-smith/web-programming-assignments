@@ -1,6 +1,7 @@
 const { Collection } = require("mongodb");
 const { connect } = require("./mongo");
 const { ObjectId } = require("mongodb");
+const { isErrored } = require("nodemailer/lib/xoauth2");
 
 const COLLECTION_NAME = "users";
 
@@ -18,6 +19,26 @@ async function getUsers() {
 async function getUser(userName) {
   const users = await collection();
   const user = await users.findOne({ userName });
+  if(!user) {
+    let message = {
+      text: "User does not exist",
+      type: "danger",
+    }
+    return message;
+  }
+  return user;
+}
+
+async function getUserById(userId) {
+  const users = await collection();
+  const user = await users.findOne({ _id: new ObjectId(userId) });
+  if(!user) {
+    let message = {
+      text: "User does not exist",
+      type: "danger",
+    }
+    return message;
+  }
   return user;
 }
 
@@ -55,6 +76,7 @@ async function createUser(data) {
       isAdmin: false,
       profilePicture: "../../client/src/assets/profilePicture.jpg",
       friends: [],
+      friendRequests: [],
     }
     await users.insertOne(user);
     message.text = "Account successfully created!";
@@ -110,17 +132,56 @@ async function deleteUser(userName) {
 
 async function getUserId(userName) {
   const user = await getUser(userName);
-
-  if(!user) {
-    let message = {
-      text: "User does not exist",
-      type: "danger",
-    }
-    return message;
-  }
+  if("text" in user && "type" in user)
+    return user;
   const userId = user._id;
   return userId;
 }
+
+async function addFriend(userName, friendName) {
+  const users = await collection();
+  const user = await getUser(userName);
+  if("text" in user && "type" in user)
+    return user;
+
+  const friend = await getUser(friendName);
+  if(("text" in friend && "type" in friend))
+    return friend;
+
+  
+
+  if (user.friends.includes(friend._id)) {
+    return {
+      text: "Error! User is already a friend",
+      type: "danger",
+    }
+  }
+
+  if (user.friendRequests.includes(friend._id)) {
+    user.friendRequests.splice(user.friendRequests.indexOf(friend._id), 1);
+    user.friends.push(friend._id);
+    await users.updateOne({ _id: new ObjectId(user._id) }, { $set: user });
+    if(!friend.friends.includes(user._id))
+      friend.friends.push(user._id);
+    await users.updateOne({ _id: new ObjectId(friend._id) }, { $set: friend });
+    return {
+      text: "Friend successfully added",
+      type: "success",
+    }
+  }
+
+  friend.friendRequests.push(user._id);
+  await users.updateOne({ _id: new ObjectId(friend._id) }, { $set: friend });
+  return {
+    text: "Friend request sent",
+    type: "success",
+  }
+}
+  
+  
+
+  
+    
 
 
 module.exports = {
@@ -131,4 +192,5 @@ module.exports = {
   authenticate,
   getUserId,
   createAdmin,
+  addFriend,
 };

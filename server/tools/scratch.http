@@ -26,6 +26,15 @@ CONTENT-TYPE: application/json
 }
 
 ###
+PATCH http://localhost:3003/api/v1/users/add-friend
+CONTENT-TYPE: application/json
+
+{
+  "userName": "lyman93",
+  "friendName": "lyman"
+}
+
+###
 
 DELETE http://localhost:3003/api/v1/users/lyman
 
