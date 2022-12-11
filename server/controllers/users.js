@@ -34,8 +34,8 @@ app.
     .then((x) => res.status(200).send(x))
     .catch(next);
   })
-  .patch('/add-friend', (req, res, next) => {
-    users.addFriend(req.body.userName, req.body.friendName)
+  .patch('/send-friend-request', (req, res, next) => {
+    users.sendFriendRequest(req.body.userName, req.body.friendName)
     .then((x) => res.status(200).send(x))
     .catch(next);
   });

@@ -30,8 +30,8 @@ PATCH http://localhost:3003/api/v1/users/add-friend
 CONTENT-TYPE: application/json
 
 {
-  "userName": "lyman93",
-  "friendName": "lyman"
+  "userName": "lyman",
+  "friendName": "lyman93"
 }
 
 ###

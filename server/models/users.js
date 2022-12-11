@@ -1,7 +1,6 @@
 const { Collection } = require("mongodb");
 const { connect } = require("./mongo");
 const { ObjectId } = require("mongodb");
-const { isErrored } = require("nodemailer/lib/xoauth2");
 
 const COLLECTION_NAME = "users";
 
@@ -138,9 +137,9 @@ async function getUserId(userName) {
   return userId;
 }
 
-async function addFriend(userName, friendName) {
+async function sendFriendRequest(senderName, friendName) {
   const users = await collection();
-  const user = await getUser(userName);
+  const user = await getUser(senderName);
   if("text" in user && "type" in user)
     return user;
 
@@ -157,7 +156,7 @@ async function addFriend(userName, friendName) {
     }
   }
 
-  if (user.friendRequests.includes(friend._id)) {
+  if (user.friendRequests.includes(new ObjectId(friend._id))) {
     user.friendRequests.splice(user.friendRequests.indexOf(friend._id), 1);
     user.friends.push(friend._id);
     await users.updateOne({ _id: new ObjectId(user._id) }, { $set: user });
@@ -192,5 +191,5 @@ module.exports = {
   authenticate,
   getUserId,
   createAdmin,
-  addFriend,
+  sendFriendRequest,
 };
