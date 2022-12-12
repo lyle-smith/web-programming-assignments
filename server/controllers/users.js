@@ -19,12 +19,12 @@ app.
     .then((x) => res.status(200).send(x))
     .catch(next);
   })
-  .post('/createUser', (req, res, next) => {
+  .post('/create-user', (req, res, next) => {
     users.createUser(req.body)
     .then((x) => res.status(200).send(x))
     .catch(next);
   })
-  .post('/createAdmin', (req, res, next) => {
+  .post('/create-admin', (req, res, next) => {
     users.createAdmin(req.body)
     .then((x) => res.status(200).send(x))
     .catch(next);
@@ -35,7 +35,7 @@ app.
     .catch(next);
   })
   .patch('/send-friend-request', (req, res, next) => {
-    users.sendFriendRequest(req.body.userName, req.body.friendName)
+    users.sendFriendRequest(req.body.senderName, req.body.friendName)
     .then((x) => res.status(200).send(x))
     .catch(next);
   });

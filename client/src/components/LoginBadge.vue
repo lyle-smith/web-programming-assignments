@@ -16,6 +16,8 @@ import { computed, ref, watch } from "vue";
     <div class="navbar-item has-dropdown is-hoverable">
       <a>{{ session.user?.userName }}</a>
       <div class="navbar-dropdown">
+        <router-link to="/profile" class="navbar-item">Profile</router-link>
+        <router-link to="/friends" class="navbar-item">Friends</router-link>
         <a class="navbar-item" @click="logout()">Log Out</a>
       </div>
     </div>

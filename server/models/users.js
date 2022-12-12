@@ -1,6 +1,7 @@
 const { Collection } = require("mongodb");
 const { connect } = require("./mongo");
 const { ObjectId } = require("mongodb");
+const _ = require("lodash");
 
 const COLLECTION_NAME = "users";
 
@@ -103,6 +104,7 @@ async function createAdmin(data) {
       isAdmin: true,
       profilePicture: "../../client/src/assets/profilePicture.jpg",
       friends: [],
+      friendRequests: [],
     }
     await users.insertOne(user);
     message.text = "Account successfully created!";
@@ -149,18 +151,18 @@ async function sendFriendRequest(senderName, friendName) {
 
   
 
-  if (user.friends.includes(friend._id)) {
+  if (_.find(user.friends, friend._id)) {
     return {
       text: "Error! User is already a friend",
       type: "danger",
     }
   }
 
-  if (user.friendRequests.includes(new ObjectId(friend._id))) {
+  if (_.find(user.friendRequests, friend._id)) {
     user.friendRequests.splice(user.friendRequests.indexOf(friend._id), 1);
     user.friends.push(friend._id);
     await users.updateOne({ _id: new ObjectId(user._id) }, { $set: user });
-    if(!friend.friends.includes(user._id))
+    if(!_.find(friend.friends, user._id))
       friend.friends.push(user._id);
     await users.updateOne({ _id: new ObjectId(friend._id) }, { $set: friend });
     return {

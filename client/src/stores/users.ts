@@ -13,7 +13,7 @@ export interface User {
 }
 
 export function createUser(userName: string, email: string, password: string) {
-  return api<Message>("users/createUser", { userName, email, password }).then(
+  return api<Message>("users/create-user", { userName, email, password }).then(
     (res) => {
       if (res.type === "danger") session.messages.push(res);
     }
@@ -21,7 +21,7 @@ export function createUser(userName: string, email: string, password: string) {
 }
 
 export function createAdmin(userName: string, email: string, password: string) {
-  return api<Message>("users/createAdmin", { userName, email, password }).then(
+  return api<Message>("users/create-admin", { userName, email, password }).then(
     (res) => {
       if (res.type === "danger") session.messages.push(res);
     }
@@ -54,5 +54,18 @@ export function authenticate(userName: string, password: string) {
       console.log("user does not exist");
       session.messages.push(res);
     }
+  });
+}
+
+export function sendFriendRequest(senderName: string, friendName: string) {
+  return api<Message>(
+    `users/send-friend-request`,
+    {
+      senderName,
+      friendName,
+    },
+    "PATCH"
+  ).then((res) => {
+    session.messages.push(res);
   });
 }

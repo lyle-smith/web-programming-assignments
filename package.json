@@ -4,7 +4,6 @@
   "description": "",
   "author": "",
   "license": "ISC",
-
   "scripts": {
     "build": "npm i -ws && npm run build -ws",
     "dev": "nodemon --watch server server/index.js",
@@ -14,14 +13,14 @@
     "client"
   ],
   "dependencies": {
-    "mongodb": "^4.12.1",
     "dotenv": "^16.0.3",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "lodash": "^4.17.21",
+    "mongodb": "^4.12.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lyle-smith/web-programming-classwork.git"
