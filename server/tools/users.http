@@ -1,0 +1,45 @@
+http://localhost:3003/api/v1/users
+
+###
+http://localhost:3003/api/v1/users/lyman93
+
+###
+POST http://localhost:3003/api/v1/users/authenticate
+CONTENT-TYPE: application/json
+
+{
+  "userName": "lyman93",
+  "password": "password"
+}
+
+###
+POST http://localhost:3003/api/v1/users/create-user
+CONTENT-TYPE: application/json
+
+{
+  "userName": "newUser",
+  "password": "password",
+  "email": "newuser1@gmail.com"
+}
+
+###
+POST http://localhost:3003/api/v1/users/create-admin
+CONTENT-TYPE: application/json
+
+{
+  "userName": "newAdmin",
+  "password": "password",
+  "email": "newadmin1@gmail.com"
+}
+
+###
+Delete http://localhost:3003/api/v1/users/newUser
+
+###
+PATCH http://localhost:3003/api/v1/users/send-friend-request
+CONTENT-TYPE: application/json
+
+{
+  "senderName": "lyman93",
+  "friendName": "lyman"
+}

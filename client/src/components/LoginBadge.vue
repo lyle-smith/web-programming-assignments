@@ -2,7 +2,6 @@
 import session, { login, logout, isLoggedIn } from "../stores/session";
 import { RouterLink } from "vue-router";
 import { computed, ref, watch } from "vue";
-
 </script>
 
 <template>

@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/v1/exercises/add-exercise
+CONTENT-TYPE: application/json
+
+{
+  "userName": "lyman93",
+  "workoutId": "6391544c5c3fb751b2312be3"
+}
+
+###
+http://localhost:3003/api/v1/exercises/6391544c5c3fb751b2312be3

@@ -29,7 +29,6 @@ watch(formattedWorkoutDate, () => {
             " " +
             workoutSession.value[0].trainingType
         );
-      // console.log(workoutSession.value[0].exercises[0].name);
     });
 });
 
@@ -47,7 +46,7 @@ const currentWorkout = computed(() => {
 });
 
 watch(currentWorkout, () => {
-  if(currentWorkout.value)
+  if (currentWorkout.value)
     getExercisesForWorkout(currentWorkout.value?._id)?.then((x) => {
       exerciseList.value = x;
     });

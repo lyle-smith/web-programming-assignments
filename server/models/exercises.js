@@ -36,7 +36,7 @@ async function addExercise(userName, workoutId) {
 async function getExercisesForWorkout(workoutId) {
   const workoutObjId = new ObjectId(workoutId);
   const exercises = await collection();
-  const workoutExercises = await exercises.find({ _Id: workoutObjId }).toArray();
+  const workoutExercises = await exercises.find({ workoutId: workoutObjId }).toArray();
   return workoutExercises;
 }
 
