@@ -1,8 +1,12 @@
 import session, { api } from "./session";
 import type { Message } from "./session";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 export const workoutSession = ref([] as Workout[]);
+
+watch(workoutSession, (val) => {
+  console.log("workoutSession changed", val);
+});
 
 export const workoutDate = ref(new Date());
 

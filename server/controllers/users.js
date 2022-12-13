@@ -38,6 +38,11 @@ app.
     users.sendFriendRequest(req.body.senderName, req.body.friendName)
     .then((x) => res.status(200).send(x))
     .catch(next);
+  })
+  .get('/:username/friends', (req, res, next) => {
+    users.getFriends(req.params.username)
+    .then((x) => res.status(200).send(x))
+    .catch(next);
   });
 
 

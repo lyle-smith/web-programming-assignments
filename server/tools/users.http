@@ -27,9 +27,9 @@ POST http://localhost:3003/api/v1/users/create-admin
 CONTENT-TYPE: application/json
 
 {
-  "userName": "newAdmin",
+  "userName": "lyman93",
   "password": "password",
-  "email": "newadmin1@gmail.com"
+  "email": "lyman93@gmail.com"
 }
 
 ###
@@ -40,6 +40,9 @@ PATCH http://localhost:3003/api/v1/users/send-friend-request
 CONTENT-TYPE: application/json
 
 {
-  "senderName": "lyman93",
-  "friendName": "lyman"
+  "senderName": "abc",
+  "friendName": "lyman93"
 }
+
+###
+http://localhost:3003/api/v1/users/lyman93/friends

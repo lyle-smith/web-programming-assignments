@@ -1,5 +1,10 @@
 import session, { api } from "./session";
 import type { Message } from "./session";
+import {
+  workoutSession,
+  formattedWorkoutDate,
+  getUserWorkoutsForDate,
+} from "./workouts";
 
 export interface User {
   _id: string;
@@ -8,7 +13,7 @@ export interface User {
   email: string;
   isAdmin: boolean;
   profilePicture: string;
-  friends: string[];
+  friends: User[];
   friendRequests: string[];
 }
 
@@ -48,8 +53,19 @@ export function authenticate(userName: string, password: string) {
     password,
   }).then((res) => {
     if ("password" in res && "userName" in res) {
-      if (res.password === password && res.userName === userName)
+      if (res.password === password && res.userName === userName) {
         session.user = res;
+        getUserWorkoutsForDate(
+          session.user?.userName,
+          new Date(formattedWorkoutDate.value)
+        ).then((res) => {
+          workoutSession.value = res;
+        });
+        getFriends(session.user?.userName).then((res) => {
+          if (res)
+            if (session.user && "username" in res) session.user.friends = res;
+        });
+      }
     } else {
       console.log("user does not exist");
       session.messages.push(res);
@@ -67,5 +83,18 @@ export function sendFriendRequest(senderName: string, friendName: string) {
     "PATCH"
   ).then((res) => {
     session.messages.push(res);
+    if (res.text === "Friend successfully added") {
+      getUser(friendName).then((res) => {
+        if (session.user && "userName" in res) session.user.friends.push(res);
+      });
+    }
+    return res;
+  });
+}
+
+export function getFriends(userName: string) {
+  return api<User[] | Message>(`users/${userName}/friends`).then((res) => {
+    if ("type" in res && res.type === "danger") session.messages.push(res);
+    else return res;
   });
 }

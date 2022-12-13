@@ -2,6 +2,7 @@ const { Collection } = require("mongodb");
 const { connect } = require("./mongo");
 const { ObjectId } = require("mongodb");
 const _ = require("lodash");
+const { findIdInArray } = require("../tools/helpers");
 
 const COLLECTION_NAME = "users";
 
@@ -47,6 +48,7 @@ async function authenticate(userName, password) {
   if (user) {
     if ("password" in user && "userName" in user) {
       if (user.password === password && user.userName === userName) 
+        user.friends = await getFriends(user.userName);
         return user; 
     }
   } 
@@ -74,7 +76,7 @@ async function createUser(data) {
       password: data.password,
       email: data.email,
       isAdmin: false,
-      profilePicture: "../../client/src/assets/profilePicture.jpg",
+      profilePicture: "../assets/user-placeholder.png",
       friends: [],
       friendRequests: [],
     }
@@ -97,6 +99,7 @@ async function createAdmin(data) {
     message.type = "danger";
     return message;
   } else {
+
     const user = {
       userName: data.userName,
       password: data.password,
@@ -149,20 +152,18 @@ async function sendFriendRequest(senderName, friendName) {
   if(("text" in friend && "type" in friend))
     return friend;
 
-  
-
-  if (_.find(user.friends, friend._id)) {
+  if (findIdInArray(user.friends, friend._id)) {
     return {
       text: "Error! User is already a friend",
       type: "danger",
     }
   }
 
-  if (_.find(user.friendRequests, friend._id)) {
+  if (findIdInArray(user.friendRequests, friend._id)) {
     user.friendRequests.splice(user.friendRequests.indexOf(friend._id), 1);
     user.friends.push(friend._id);
     await users.updateOne({ _id: new ObjectId(user._id) }, { $set: user });
-    if(!_.find(friend.friends, user._id))
+    if(!findIdInArray(friend.friends, user._id))
       friend.friends.push(user._id);
     await users.updateOne({ _id: new ObjectId(friend._id) }, { $set: friend });
     return {
@@ -178,12 +179,15 @@ async function sendFriendRequest(senderName, friendName) {
     type: "success",
   }
 }
-  
-  
 
-  
-    
-
+async function getFriends(userName) {
+  const users = await collection();
+  const user = await getUser(userName);
+  if("text" in user && "type" in user)
+    return user;
+  const friends = await users.find({ _id: { $in: user.friends } }).toArray();
+  return friends;
+}
 
 module.exports = {
   getUsers,
@@ -194,4 +198,5 @@ module.exports = {
   getUserId,
   createAdmin,
   sendFriendRequest,
+  getFriends,
 };

@@ -89,21 +89,21 @@ function addWorkoutSession(
 const exerciseQuantity = ref(1);
 const trainingType = ref("bodybuilding");
 
-const loggedIn = computed(() => {
-  console.log("change");
-  if (session.user) return true;
-  else return false;
-});
+// const loggedIn = computed(() => {
+//   console.log("change");
+//   if (session.user) return true;
+//   else return false;
+// });
 
-watch(loggedIn, () => {
-  if (loggedIn.value)
-    getUserWorkoutsForDate(
-      session.user?.userName,
-      new Date(formattedWorkoutDate.value)
-    ).then((x) => {
-      workoutSession.value = x;
-    });
-});
+// watch(loggedIn, () => {
+//   if (loggedIn.value)
+//     getUserWorkoutsForDate(
+//       session.user?.userName,
+//       new Date(formattedWorkoutDate.value)
+//     ).then((x) => {
+//       workoutSession.value = x;
+//     });
+// });
 
 watch(formattedWorkoutDate, () => {
   if (session.user)
