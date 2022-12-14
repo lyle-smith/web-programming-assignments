@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import session, { isLoggedIn } from "../stores/session";
 import { editProfile } from "@/stores/users";
+import LoginView from "./LoginView.vue";
 
 const editing = ref(false);
 const newUserName = ref(session.user?.userName);
@@ -45,7 +46,7 @@ function cancelEdit() {
                     class="input"
                     :class="{ 'is-static': !editing }"
                     type="text"
-                    readonly.v-if="!editing"
+                    :readonly="!editing"
                   />
                 </p>
               </div>
@@ -63,7 +64,7 @@ function cancelEdit() {
                     class="input"
                     :class="{ 'is-static': !editing }"
                     type="email"
-                    readonly.v-if="!editing"
+                    :readonly="!editing"
                   />
                 </p>
               </div>
@@ -81,7 +82,7 @@ function cancelEdit() {
                     :class="{ 'is-static': !editing }"
                     type="number"
                     value="0"
-                    readonly.v-if="!editing"
+                    :readonly="!editing"
                   />
                 </p>
               </div>

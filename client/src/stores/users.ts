@@ -87,10 +87,12 @@ export function editProfile(
     },
     "PATCH"
   ).then((res) => {
+    console.log("sent...");
     if ("type" in res && res.type === "danger") session.messages.push(res);
     else if (!("type" in res) && session.user) {
-      session.user.userName = userName;
-      session.user.email = newEmail;
+      const friends = session.user.friends;
+      session.user = res;
+      session.user.friends = friends;
     }
   });
 }
