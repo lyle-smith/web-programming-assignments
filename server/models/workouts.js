@@ -1,7 +1,7 @@
 const { Collection } = require("mongodb");
 const { connect } = require("./mongo");
 const { ObjectId } = require("mongodb");
-const { getUserId } = require("./users");
+const { getUserId, getFriends } = require("./users");
 const { addExercise } = require("./exercises");
 
 const COLLECTION_NAME = "workoutsessions";
@@ -20,6 +20,23 @@ async function getUserWorkouts(userName) {
   const workouts = await collection();
   const userWorkouts = await workouts.find({ userId }).toArray();
   return userWorkouts;
+}
+
+async function getSocialWorkouts(userName) {
+  const userWorkouts = await getUserWorkouts(userName);
+  const friends = await getFriends(userName);
+  let socialWorkouts = [];
+  socialWorkouts = socialWorkouts.concat(userWorkouts);
+  if(!("text" in friends) && !("type" in friends)) {
+    for(let i = 0; i < friends.length; i++) {
+      const friendWorkouts = await getUserWorkouts(friends[i].userName);
+      if(!("text" in friendWorkouts) && friendWorkouts.length > 0){
+        socialWorkouts = socialWorkouts.concat(friendWorkouts);
+      }
+    }
+  }
+  
+  return socialWorkouts;
 }
 
 async function getUserWorkoutsForDate(userName, date) {
@@ -55,4 +72,5 @@ module.exports = {
   addWorkout,
   getUserWorkoutsForDate,
   getUserWorkouts,
+  getSocialWorkouts,
 };

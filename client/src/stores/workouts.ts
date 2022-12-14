@@ -17,6 +17,10 @@ export const formattedWorkoutDate = computed(() => {
   return `${month}/${day}/${year - 2000}`;
 });
 
+export function sortByDate(a: Workout, b: Workout) {
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
+}
+
 export interface Workout {
   _id: string;
   userId: string;
@@ -27,7 +31,6 @@ export interface Workout {
 export function getUserWorkouts(userName: string) {
   return api<Workout[] | Message>(`workouts/${userName}`).then((res) => {
     if ("text" in res) {
-      console.log("user does not exist");
       session.messages.push(res);
       return [];
     } else {
@@ -45,7 +48,17 @@ export function getUserWorkoutsForDate(
     date,
   }).then((res) => {
     if ("text" in res) {
-      console.log("user does not exist");
+      session.messages.push(res);
+      return [];
+    } else {
+      return res;
+    }
+  });
+}
+
+export function getSocialWorkouts(userName: string) {
+  return api<Workout[] | Message>(`workouts/social/${userName}`).then((res) => {
+    if ("text" in res) {
       session.messages.push(res);
       return [];
     } else {

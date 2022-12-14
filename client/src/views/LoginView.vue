@@ -8,10 +8,6 @@ import { authenticate } from "../stores/users";
 let userName = ref("");
 let password = ref("");
 
-// const loggedIn = computed(() => {
-//   if (isLoggedIn()) return true;
-//   else return false;
-// });
 watch(isLoggedIn, () => {
   if (isLoggedIn()) router.push("/");
 });

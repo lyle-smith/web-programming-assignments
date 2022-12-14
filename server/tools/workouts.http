@@ -19,3 +19,6 @@ CONTENT-TYPE: application/json
 
 ###
 http://localhost:3003/api/v1/workouts/lyman
+
+###
+http://localhost:3003/api/v1/workouts/social/lyman93

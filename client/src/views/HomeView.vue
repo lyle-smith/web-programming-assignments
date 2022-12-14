@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import router from "@/router";
+</script>
 
 <template>
   <main class="columns is-centered is-vcentered is-mobile">
@@ -7,7 +9,10 @@
         <span class="has-text-danger">WORKOUT</span> TIME
       </h2>
       <h3 class="subtitle is-3 secondary">SPECIAL CLASSES</h3>
-      <button class="button is-rounded px-6 mr-3 is-danger">
+      <button
+        class="button is-rounded px-6 mr-3 is-danger"
+        @click="router.push('/start-workout')"
+      >
         Let's Workout!
       </button>
       <button class="button is-rounded px-6">Read More</button>

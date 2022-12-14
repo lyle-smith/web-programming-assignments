@@ -18,7 +18,12 @@ app.
     workouts.getUserWorkouts(req.params.userName)
     .then((x) => res.status(200).send(x))
     .catch(next)
-  });
+  })
+  .get('/social/:userName', (req, res, next) => {
+    workouts.getSocialWorkouts(req.params.userName)
+    .then((x) => res.status(200).send(x))
+    .catch(next)
+    });
 
 
 
