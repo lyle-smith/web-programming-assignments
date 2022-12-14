@@ -12,7 +12,13 @@
       >
     </p>
     <p class="is-size-5">
-      Completed a
+      {{
+        `${
+          new Date(date) > new Date()
+            ? "Planning to complete a "
+            : "Completed a "
+        }`
+      }}
       <span class="has-text-weight-semibold">{{ workoutType }}</span> workout
     </p>
   </div>

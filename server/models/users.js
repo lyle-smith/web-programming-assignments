@@ -72,9 +72,9 @@ async function createUser(data) {
     return message;
   } else {
     const user = {
-      userName: data.userName,
+      userName: data.userName.toLowerCase(),
       password: data.password,
-      email: data.email,
+      email: data.email.toLowerCase(),
       isAdmin: false,
       profilePicture: "../assets/user-placeholder.png",
       friends: [],
@@ -101,9 +101,9 @@ async function createAdmin(data) {
   } else {
 
     const user = {
-      userName: data.userName,
+      userName: data.userName.toLowerCase(),
       password: data.password,
-      email: data.email,
+      email: data.email.toLowerCase(),
       isAdmin: true,
       profilePicture: "../../client/src/assets/profilePicture.jpg",
       friends: [],
@@ -152,15 +152,24 @@ async function sendFriendRequest(senderName, friendName) {
   if(("text" in friend && "type" in friend))
     return friend;
 
-  if (findIdInArray(user.friends, friend._id)) {
+  if (findIdInArray(user.friends, friend._id) && findIdInArray(friend.friends, user._id)) {
     return {
       text: "Error! User is already a friend",
       type: "danger",
     }
   }
 
+  if(findIdInArray(friend.friendRequests, user._id)) {
+    return {
+      text: "Error! Friend request already sent",
+      type: "danger",
+    }
+  }
+
   if (findIdInArray(user.friendRequests, friend._id)) {
-    user.friendRequests.splice(user.friendRequests.indexOf(friend._id), 1);
+    while (findIdInArray(user.friendRequests, friend._id)){
+      user.friendRequests.splice(user.friendRequests.indexOf(friend._id), 1);
+    }
     user.friends.push(friend._id);
     await users.updateOne({ _id: new ObjectId(user._id) }, { $set: user });
     if(!findIdInArray(friend.friends, user._id))
