@@ -29,6 +29,11 @@ app.
     .then((x) => res.status(200).send(x))
     .catch(next);
   })
+  .patch('/edit-profile', (req, res, next) => {
+    users.updateProfile(req.body)
+    .then((x) => res.status(200).send(x))
+    .catch(next);
+  })
   .delete('/:username', (req, res, next) => {
     users.deleteUser(req.params.username)
     .then((x) => res.status(200).send(x))

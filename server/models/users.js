@@ -116,6 +116,18 @@ async function createAdmin(data) {
   }
 }
 
+async function updateProfile(userData) {
+  const user = await getUser(userData.userName);
+  if("text" in user && "type" in user)
+    return user;
+  
+  user.userName = userData.newUserName.toLowerCase();
+  user.email = userData.newEmail.toLowerCase();
+
+  const users = await collection();
+  await users.updateOne({ _id: new ObjectId(user._id) }, { $set: user });
+  return user;
+}
 
 async function deleteUser(userName) {
   const users = await collection();
@@ -208,4 +220,5 @@ module.exports = {
   createAdmin,
   sendFriendRequest,
   getFriends,
+  updateProfile,
 };

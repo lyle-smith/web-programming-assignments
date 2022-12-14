@@ -33,6 +33,16 @@ CONTENT-TYPE: application/json
 }
 
 ###
+PATCH http://localhost:3003/api/v1/users/edit-profile
+CONTENT-TYPE: application/json
+
+{
+  "userName": "admin",
+  "newUserName": "amine",
+  "newEmail": "amine@gmail.com"
+}
+
+###
 Delete http://localhost:3003/api/v1/users/newUser
 
 ###

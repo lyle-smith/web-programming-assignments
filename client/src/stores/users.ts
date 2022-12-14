@@ -63,12 +63,34 @@ export function authenticate(userName: string, password: string) {
         });
         getFriends(session.user?.userName).then((res) => {
           if (res)
-            if (session.user && "username" in res) session.user.friends = res;
+            if (session.user && !("text" in res)) session.user.friends = res;
         });
       }
     } else {
       console.log("user does not exist");
       session.messages.push(res);
+    }
+  });
+}
+
+export function editProfile(
+  userName: string,
+  newUserName: string,
+  newEmail: string
+) {
+  return api<User | Message>(
+    `users/edit-profile`,
+    {
+      userName,
+      newUserName,
+      newEmail,
+    },
+    "PATCH"
+  ).then((res) => {
+    if ("type" in res && res.type === "danger") session.messages.push(res);
+    else if (!("type" in res) && session.user) {
+      session.user.userName = userName;
+      session.user.email = newEmail;
     }
   });
 }
