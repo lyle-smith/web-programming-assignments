@@ -53,11 +53,10 @@ const addingUser = ref(false);
         <thead>
           <tr>
             <th></th>
-            <th>First Name</th>
-            <th>Last Name</th>
             <th>Username</th>
             <th>Email</th>
             <th>Is Admin</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -67,8 +66,6 @@ const addingUser = ref(false);
                 <img :src="user.profilePicture" class="is-rounded" />
               </figure>
             </td>
-            <td>{{ user.firstName }}</td>
-            <td>{{ user.lastName }}</td>
             <td>{{ user.userName }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.isAdmin }}</td>
