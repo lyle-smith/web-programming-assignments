@@ -19,7 +19,14 @@ async function getUsers() {
 
 async function getUser(userName) {
   const users = await collection();
-  const user = await users.findOne({ userName });
+  let user;
+  if(userName.includes("@"))
+    user = await users.findOne({ email: userName });
+  else
+    user = await users.findOne({ userName });
+  
+  console.log(user);
+
   if(!user) {
     let message = {
       text: "User does not exist",
@@ -44,14 +51,14 @@ async function getUserById(userId) {
 }
 
 async function authenticate(userName, password) {
+  console.log("Before getUser");
   const user = await getUser(userName);
-  if (user) {
-    if ("password" in user && "userName" in user) {
-      if (user.password === password && user.userName === userName) 
-        user.friends = await getFriends(user.userName);
-        return user; 
+  console.log("After getUser");
+  if (user && "password" in user && "userName" in user) {
+    if (user.password === password && (user.userName === userName || user.email === userName)) {
+      return user; 
     }
-  } 
+  }
   let message = {
     text: "Invalid username or password",
     type: "danger",
@@ -61,30 +68,36 @@ async function authenticate(userName, password) {
 
 async function createUser(data) {
   const users = await collection();
-  const existingUser = await users.findOne({ userName: data.userName });
+  const existingUserName = await users.findOne({ userName: data.userName });
+  const existingEmail = await users.findOne({ email: data.email })
   let message = {
     text: "",
     type: "",
   }
-  if (existingUser) {
+  if (existingUserName) {
     message.text = "Error! Username already exists";
     message.type = "danger";
     return message;
-  } else {
-    const user = {
-      userName: data.userName.toLowerCase(),
-      password: data.password,
-      email: data.email.toLowerCase(),
-      isAdmin: false,
-      profilePicture: "../assets/user-placeholder.png",
-      friends: [],
-      friendRequests: [],
-    }
-    await users.insertOne(user);
-    message.text = "Account successfully created!";
-    message.type = "success";
+  }
+  if (existingEmail) {
+    message.text = "Error! Email already exists";
+    message.type = "danger";
     return message;
   }
+  const user = {
+    userName: data.userName.toLowerCase(),
+    password: data.password,
+    email: data.email.toLowerCase(),
+    isAdmin: false,
+    profilePicture: "../assets/user-placeholder.png",
+    friends: [],
+    friendRequests: [],
+  }
+  await users.insertOne(user);
+  message.text = "Account successfully created!";
+  message.type = "success";
+  return message;
+  
 }
 
 async function createAdmin(data) {

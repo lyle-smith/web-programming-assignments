@@ -20,7 +20,10 @@ export interface User {
 export function createUser(userName: string, email: string, password: string) {
   return api<Message>("users/create-user", { userName, email, password }).then(
     (res) => {
-      if (res.type === "danger") session.messages.push(res);
+      if (res.type === "danger") {
+        session.messages.push(res);
+        return false;
+      } else return true;
     }
   );
 }
@@ -53,7 +56,10 @@ export function authenticate(userName: string, password: string) {
     password,
   }).then((res) => {
     if ("password" in res && "userName" in res) {
-      if (res.password === password && res.userName === userName) {
+      if (
+        res.password === password &&
+        (res.userName === userName || res.email === userName)
+      ) {
         session.user = res;
         getUserWorkoutsForDate(
           session.user?.userName,
@@ -65,9 +71,13 @@ export function authenticate(userName: string, password: string) {
           if (res)
             if (session.user && !("text" in res)) session.user.friends = res;
         });
+      } else {
+        session.messages.push({
+          type: "danger",
+          text: "Error fetching userName and password.",
+        });
       }
     } else {
-      console.log("user does not exist");
       session.messages.push(res);
     }
   });

@@ -6,7 +6,7 @@ import {
 } from "../stores/workouts";
 import session from "../stores/session";
 import { watch, ref, computed } from "vue";
-import { getExercisesForWorkout } from "@/stores/exercises";
+import { getExercisesForWorkout, addExercise } from "@/stores/exercises";
 
 if (session.user)
   getUserWorkoutsForDate(
@@ -51,6 +51,14 @@ watch(currentWorkout, () => {
       exerciseList.value = x;
     });
 });
+
+function addExerciseToList(userName: string | undefined, workoutId: string) {
+  addExercise(userName, workoutId)?.then((res) => {
+    exerciseList.value.push(res);
+  });
+}
+
+const currentWorkoutExercises = ref([]);
 </script>
 
 <template>
@@ -66,13 +74,7 @@ watch(currentWorkout, () => {
           workout.trainingType.slice(1)
         }}
       </option>
-      <!-- <option value="bodybuilding">
-        {{ workoutSessions ? workoutSessions[0].trainingType : "" }}
-      </option> -->
-      <!-- <option value="powerlifting">Powerlifting Workout</option>
-      <option value="crossfit">Crossfit Workout</option> -->
     </select>
-    <!-- <p class="pl-5 pb-3 pt-4">Bodybuilding Workout</p> -->
     <div id="exercise-list">
       <div class="row">
         <div style="width: 13.5%"></div>
@@ -104,8 +106,13 @@ watch(currentWorkout, () => {
           :value="exercise.rpe"
         />
       </div>
-      <button class="button is-outlined is-white pl-3" id="add-exercise">
-        <span class="icon pr-4"><i class="fa fa-plus"></i></span> Add Exercise
+      <button
+        class="button is-outlined is-white pl-4 ml-4"
+        id="add-exercise"
+        @click="addExerciseToList(session.user?.userName, currentWorkoutId)"
+      >
+        <span class="icon pr-4 pl-1"><i class="fa fa-plus"></i></span> Add
+        Exercise
       </button>
     </div>
     <div id="exercise-list-footer">

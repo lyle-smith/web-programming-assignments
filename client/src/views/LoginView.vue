@@ -26,12 +26,12 @@ watch(isLoggedIn, () => {
         <p class="control has-icons-left has-icons-right">
           <input
             class="input"
-            type="username"
-            placeholder="Email"
+            type="text"
+            placeholder="Username or Email"
             v-model="userName"
           />
           <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
+            <i class="fas fa-user"></i>
           </span>
           <span class="icon is-small is-right">
             <i class="fas fa-check"></i>
@@ -72,7 +72,6 @@ watch(isLoggedIn, () => {
     </div>
     <div class="column is-3"></div>
   </div>
-  <!-- </div> -->
 </template>
 
 <style scoped>

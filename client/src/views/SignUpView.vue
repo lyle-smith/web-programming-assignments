@@ -1,11 +1,21 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { createUser } from "../stores/users";
+import router from "@/router";
 
 let email = ref("");
 let userName = ref("");
 let password = ref("");
+
+const created = ref(false);
+
+watch(created, () => {
+  if (created.value) {
+    console.log("changing page...");
+    router.push("/login");
+  }
+});
 </script>
 
 <template>
@@ -66,23 +76,23 @@ let password = ref("");
         <p class="control">
           <button
             class="button is-danger is-fullwidth has-text-weight-bold"
-            @click="createUser(userName, email, password)"
+            @click="
+              createUser(userName, email, password).then((res) => {
+                if (res) created = true;
+              })
+            "
           >
             <span class="is-size-5">Sign Up</span>
           </button>
         </p>
       </div>
-      <RouterLink id="firstLink" to="/forgot-password"
-        >Forgot Password?</RouterLink
-      >
-      <span id="secondLink"
-        >Don't have an account?
-        <RouterLink to="/sign-up">Sign up now!</RouterLink></span
+      <span id="login"
+        >Already have an account?
+        <RouterLink to="/login">Log in</RouterLink></span
       >
     </div>
     <div class="column is-3"></div>
   </div>
-  <!-- </div> -->
 </template>
 
 <style scoped>
@@ -90,11 +100,7 @@ let password = ref("");
   margin-bottom: 1rem;
 }
 
-#firstLink {
-  float: left;
-}
-
-#secondLink {
+#login {
   float: right;
 }
 
