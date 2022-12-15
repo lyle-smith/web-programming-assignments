@@ -11,6 +11,12 @@ async function collection() {
   return client.db("special").collection(COLLECTION_NAME);
 }
 
+async function searchUsers(query) {
+  const users = await collection();
+  const data = await users.find({ userName: { $regex: query, $options: 'i' } }).toArray();
+  return data;
+}
+
 async function getUsers() {
   const users = await collection();
   const data = await users.find().toArray();
@@ -234,4 +240,5 @@ module.exports = {
   sendFriendRequest,
   getFriends,
   updateProfile,
+  searchUsers,
 };

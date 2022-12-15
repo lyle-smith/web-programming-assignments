@@ -1,9 +1,48 @@
 <script setup lang="ts">
-import { sendFriendRequest, getFriends } from "@/stores/users";
-import { ref } from "vue";
+import {
+  sendFriendRequest,
+  getFriends,
+  searchUsers,
+  type User,
+} from "@/stores/users";
+import { ref, watch } from "vue";
 import session, { isLoggedIn } from "../stores/session";
+import LoginView from "./LoginView.vue";
 
-const addedFriend = ref("");
+const userSearch = ref("");
+const results = ref([""]);
+const isOpen = ref(false);
+const autoCompleted = ref(false);
+
+watch(userSearch, () => {
+  if (userSearch.value.length > 0 && !autoCompleted.value) {
+    searchUsers(userSearch.value).then((res) => {
+      results.value = res
+        .map((user) => user.userName)
+        .filter((item) => {
+          if (session.user)
+            return (
+              item.toLowerCase() !== session.user.userName.toLowerCase() &&
+              item.toLowerCase().indexOf(userSearch.value.toLowerCase()) > -1
+            );
+        });
+      if (results.value.length > 0 && userSearch.value.length > 0) {
+        isOpen.value = true;
+      } else {
+        isOpen.value = false;
+      }
+    });
+  } else {
+    autoCompleted.value = false;
+    isOpen.value = false;
+  }
+});
+
+function selectSearchResult(result: string) {
+  userSearch.value = result;
+  isOpen.value = false;
+  autoCompleted.value = true;
+}
 
 function sendRequest(senderName: string, friendName: string) {
   sendFriendRequest(senderName, friendName).then((res) => {
@@ -38,8 +77,8 @@ if (session.user)
               <input
                 class="input"
                 type="text"
-                v-model="addedFriend"
-                placeholder="Add Friend"
+                v-model="userSearch"
+                placeholder="Lookup username"
               />
             </div>
             <div class="control">
@@ -48,13 +87,23 @@ if (session.user)
                 @click="
                   sendRequest(
                     session.user?.userName ? session.user.userName : '',
-                    addedFriend
+                    userSearch
                   )
                 "
                 >Send Request</a
               >
             </div>
           </div>
+          <ul v-show="isOpen" class="autocomplete-results">
+            <li
+              v-for="(result, i) in results"
+              :key="i"
+              class="autocomplete-result"
+              @click="selectSearchResult(result)"
+            >
+              {{ result }}
+            </li>
+          </ul>
           <div
             v-for="friend in session.user?.friends"
             :key="friend._id"
@@ -83,5 +132,27 @@ if (session.user)
   display: inline-block;
   vertical-align: middle;
   margin: 1em;
+}
+
+.autocomplete-results {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #eeeeee;
+  min-height: 1rem;
+  max-height: 4rem;
+  width: 22rem;
+  overflow: auto;
+}
+
+.autocomplete-result {
+  list-style: none;
+  text-align: left;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+
+.autocomplete-result:hover {
+  background-color: #4972f9;
+  color: white;
 }
 </style>

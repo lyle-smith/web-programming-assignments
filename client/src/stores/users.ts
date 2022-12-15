@@ -17,6 +17,10 @@ export interface User {
   friendRequests: string[];
 }
 
+export function getUsers() {
+  return api<User[]>(`users`);
+}
+
 export function createUser(userName: string, email: string, password: string) {
   return api<Message>("users/create-user", { userName, email, password }).then(
     (res) => {
@@ -46,8 +50,8 @@ export function getUser(userName: string) {
   return api<User>(`users/${userName}`);
 }
 
-export function getUsers() {
-  return api<User>(`users`);
+export function searchUsers(query: string) {
+  return api<User[]>(`users/search/${query}`);
 }
 
 export function authenticate(userName: string, password: string) {

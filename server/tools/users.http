@@ -4,6 +4,9 @@ http://localhost:3003/api/v1/users
 http://localhost:3003/api/v1/users/lyman93
 
 ###
+http://localhost:3003/api/v1/users/search/a
+
+###
 POST http://localhost:3003/api/v1/users/authenticate
 CONTENT-TYPE: application/json
 
